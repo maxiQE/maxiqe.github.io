@@ -1,0 +1,251 @@
+---
+title: Optimal gem setups for fellowship
+format:
+    html:
+        toc: false
+---
+
+I've computed the optimal gem setups for EAS2.
+
+[Results are here](/standalone/optimal_gem_setups.qmd)
+
+## The calculation
+
+To compute the optimal setups, I've used the [z3-solver](https://pypi.org/project/z3-solver/) python library.
+
+This library provides an API to:
+
+- specify a satifiability problem,
+- explore it efficiently.
+
+I explained the problem to gemini and I told them how to set-it up in z3.
+The result code is below.
+
+Interestingly, this z3 code is (much) slower than an exhaustive search I coded independantly: a few minutes to a few hours.
+That probably means that the problem isn't quite encoded as it should.
+
+```python
+"""Fellowship gem optimization
+
+Problem formulation:
+- we are given a number of slots of various weight: 200, 135, 100
+- we fill the slots with gems of various tiers: T1 to T4
+- each tier provides a specific gem power and has a specific gem cost
+- each gem can have a specific color, among 6
+- there are gem power thresholds: crossing each treshold provides a discrete boost to power (gem trait levels)
+- crossing the final threshold provides increasing boosts to power (gem overcap)
+- for each color:
+    - total gem power is the sum of (slot power * gem power)
+    - color level is equal to how many thresholds we have crossed
+    - gem overcap is the difference between total gem power and the final threshold
+- we want to find all of the assignments which are locally optimal / pareto optimal
+    - We want to maximize all levels and overcap
+    - An assignment is pareto optimal if we can't improve one without reducing the others
+- furthermore, we want to focus on only the assignments which are better than some other query.
+- (NB: if user doesn't supply a query, we simply look to improve on all levels = 0 and overcap = 0)
+
+To maximize speed, we perform symmetry breaking:
+- Instead of looking at single slot assignment, parameterize the problem in terms of:
+    - n_{color}_{tier}_{slot_type}
+    - stored in variable: count[color][slot_type][tier]
+    every single constraint and objective aligns neatly with this.
+- Instead of looking at all possible color assignments, add the constraint that gem power is decreasing among the colors.
+"""
+
+import json
+
+import tqdm
+import z3
+
+VERBOSE = True
+SAVE_RESULT = False
+
+# --- Constants & Inputs ---
+TIERS = [1, 2, 3, 4]
+POWERS = {1: 120, 2: 240, 3: 360, 4: 480}
+COSTS = {1: 1, 2: 3, 3: 9, 4: 27}
+THRESHOLDS = [120, 240, 480, 720, 960, 1200, 1560, 1920, 2280, 2640]
+
+SLOT_WEIGHTS = [200, 135, 100]  # Multiplied by 100 to keep it z3.Integer-based
+SLOT_COUNTS = [1, 4, 2]  # x2.0, x1.35, x1.0 (Upper bounds)
+BUDGET = 92
+NUM_COLORS = 6
+
+COLORS = range(NUM_COLORS)
+MAX_THRESHOLD = THRESHOLDS[-1]
+
+# A tuple of level, overcap
+# Only solutions better than this in all aspects than this query will be computed
+QUERY = ([0, 0, 0, 0, 0, 0], 0)  # The 0-query; compute all solutions
+
+QUERY_LEVELS, QUERY_OVERCAP = QUERY
+
+assert sorted(THRESHOLDS) == THRESHOLDS
+
+solutions = []
+
+n_200 = 1
+for n_sets in tqdm.tqdm(range(0, 5)):  # 0 to 4
+    n_135 = 10 - 2 * n_sets
+    # for n_100 in [0, 10 - 2 * n_sets]:  # EAS2: no slots on set pieces; ??: 100% slots on set pieces
+    for n_100 in [0]:  # EAS2: no slots on set pieces
+        SLOT_COUNTS = [n_200, n_135, n_100]
+
+        tqdm.tqdm.write(str(SLOT_COUNTS))
+
+        opt = z3.Optimize()
+
+        # --- Variables ---
+        # count[color][slot_type][tier]
+        counts = {}
+        for c in COLORS:
+            counts[c] = {}
+            for s_idx, weight in enumerate(SLOT_WEIGHTS):
+                counts[c][s_idx] = {t: z3.z3.Int(f"c{c}_s{weight}_t{t}") for t in TIERS}
+                for t in TIERS:
+                    opt.add(counts[c][s_idx][t] >= 0)
+
+        # --- Constraz3.Ints ---
+
+        # 1. Slot Capacity Constraz3.Ints
+        for s_idx, limit in enumerate(SLOT_COUNTS):
+            # Total gems of all colors and tiers in this slot type cannot exceed limit
+            opt.add(z3.Sum([counts[c][s_idx][t] for c in COLORS for t in TIERS]) <= limit)
+
+        # 2. Budget Constraz3.Int
+        total_cost = z3.Sum([counts[c][s_idx][t] * COSTS[t] for c in COLORS for s_idx in range(3) for t in TIERS])
+        opt.add(total_cost <= BUDGET)
+
+        # 3. Power Calculation (z3.Integer scaled by 100)
+        color_powers = []
+        for c in COLORS:
+            p = z3.Sum([counts[c][s_idx][t] * POWERS[t] * SLOT_WEIGHTS[s_idx] for s_idx in range(3) for t in TIERS])
+            color_powers.append(p)
+
+        # 4. Symmetry Breaking
+        for c in range(len(COLORS) - 1):
+            opt.add(color_powers[c] >= color_powers[c + 1])
+
+        # 5. Trait Levels & Overcap
+        trait_levels = []
+        overcaps = []
+
+        for c in COLORS:
+            # Power is scaled by 100, so thresholds must be too
+            p_val = color_powers[c]
+
+            # Trait Level (bisect_right logic)
+            # level = number of thresholds that power is >= to
+            level = z3.Int(f"level_c{c}")
+            opt.add(level == z3.Sum([z3.If(p_val >= t * 100, 1, 0) for t in THRESHOLDS]))
+            trait_levels.append(level)
+
+            # Overcap (only z3.If power > max threshold)
+            oc = z3.Int(f"oc_c{c}")
+            opt.add(oc == z3.If(p_val > MAX_THRESHOLD * 100, p_val - (MAX_THRESHOLD * 100), 0))
+            overcaps.append(oc)
+
+        # 6. Constraz3.Int: Only one color can overcap
+        opt.add(z3.Sum([z3.If(oc > 0, 1, 0) for oc in overcaps]) <= 1)
+
+        # --- Objectives ---
+
+        # To find Pareto optimal solutions in Z3, we use 'set' to define the strategy.
+        # For truly multiple non-prioritized objectives, "box" or "lex" are common.
+        z3.set_option(precision=10)
+        opt.set("priority", "lex")
+
+        # Primary: Maximize trait levels (z3.Sum or individual)
+        for lvl in trait_levels:
+            opt.maximize(lvl)
+
+        # Secondary: Maximize Overcap
+        opt.maximize(z3.Sum(overcaps))
+
+        def add_constraint__dominates_or_equals(opt, levels, overcap):
+            dominates_or_equals__conditions = [trait_levels[i] >= levels[i] for i in range(len(trait_levels))]
+            dominates_or_equals__conditions.append(z3.Sum(overcaps) >= overcap)
+
+            opt.add(z3.And(dominates_or_equals__conditions))
+
+        def add_constraint__improves_at_least_one_objective(opt, levels, overcap):
+            dominates_or_equals__conditions = [trait_levels[i] > levels[i] for i in range(len(trait_levels))]
+            dominates_or_equals__conditions.append(z3.Sum(overcaps) > overcap)
+
+            opt.add(z3.Or(dominates_or_equals__conditions))
+
+        add_constraint__dominates_or_equals(opt, QUERY_LEVELS, QUERY_OVERCAP)
+
+        def extract_gem_assignments(model, counts):
+            """Parses the model to return a structured dict of non-zero gem placements."""
+            setup = {}
+            for c in COLORS:
+                color_list = []
+                for s_idx, weight in enumerate(SLOT_WEIGHTS):
+                    for t in TIERS:
+                        # Extract the integer value from the model
+                        qty = model.eval(counts[c][s_idx][t], model_completion=True).as_long()
+                        if qty > 0:
+                            color_list.append({"multiplier": weight / 100, "tier": t, "count": qty})
+
+                if color_list:
+                    setup[c] = color_list
+
+            return setup
+
+        # --- Solve & Extract ---
+        while opt.check() == z3.sat:
+            m = opt.model()
+
+            # 1. Extraction of objective values
+            current_levels = [m.eval(lvl).as_long() for lvl in trait_levels]
+            current_oc = m.eval(z3.Sum(overcaps)).as_long()
+
+            # 2. Extraction of the actual gem setup
+            gem_setup = extract_gem_assignments(m, counts)
+
+            # solutions.append({"levels": current_levels, "overcap": current_oc // 100, "gems": gem_setup})
+            solutions.append(
+                {
+                    "n_sets": n_sets,
+                    "n_200": n_200,
+                    "n_135": n_135,
+                    "n_100": n_100,
+                    "levels": current_levels,
+                    "overcap": current_oc // 100,
+                    "gems": gem_setup,
+                }
+            )
+
+            if VERBOSE:
+                # Print a summary of the layout
+                print(f"\n--- Found Pareto Solution: Levels {current_levels} {current_oc // 100} ---")
+                for color, assignments in gem_setup.items():
+                    assign_str = ""
+                    for assignment in assignments:
+                        for _ in range(assignment["count"]):
+                            if assignment["multiplier"] == 2.0:
+                                assign_str += f" ** T{assignment['tier']} ** "
+                            elif assignment["multiplier"] == 1.35:
+                                assign_str += f" ++ T{assignment['tier']} ++ "
+                            else:
+                                assign_str += f" -- T{assignment['tier']} -- "
+
+                    print(f"  Color {color}: {assign_str}")
+
+            # 3. New constraint: improve on already found solutions
+            add_constraint__improves_at_least_one_objective(opt, current_levels, current_oc)
+
+
+def elem_to_list(data_elem) -> list[int]:
+    return [data_elem["n_sets"]] + data_elem["levels"] + [data_elem["overcap"]]
+
+
+solutions = sorted(solutions, reverse=True, key=elem_to_list)
+
+print(f"\nTotal Pareto optimal solutions found: {len(solutions)}")
+
+if SAVE_RESULT:
+    with open("gem_pareto.json", "w") as file:
+        json.dump(solutions, file)
+```

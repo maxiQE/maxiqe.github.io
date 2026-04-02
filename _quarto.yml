@@ -1,0 +1,35 @@
+project:
+    type: website
+    output-dir: docs
+
+website:
+    title: "MaxiQE"
+    site-url: maxiqe.github.io
+    page-navigation: true
+    back-to-top-navigation: true
+    navbar:
+        left:
+            - standalone/optimal_gem_setups.qmd
+
+execute:
+    freeze: auto
+
+format:
+    html:
+        theme:
+            - cyborg
+
+        toc: true
+        toc-location: right-body
+        
+        anchor-sections: true
+
+        code-copy: true
+
+        link-external-icon: true
+        link-external-newwindow: true
+
+        lang: en
+
+        strip-comments: true
+
