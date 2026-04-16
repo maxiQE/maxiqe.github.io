@@ -1,0 +1,510 @@
+---
+title: Elarion damage calculator
+format: html
+filters:
+  - shinylive
+---
+
+
+:::{.column-screen-inset}
+
+```{shinylive-python}
+# | standalone: true
+# | viewerHeight: 720
+from typing import Any
+from shiny.express import ui, input, render
+import math
+import pandas as pd
+
+# ---------------------------------------------------------------------------
+# Focused Shot
+# ---------------------------------------------------------------------------
+FOCUSED_SHOT_DAMAGE_MIN = 1212
+FOCUSED_SHOT_DAMAGE_MAX = 1481
+FOCUSED_SHOT_CAST_TIME = 1.5
+FOCUSED_SHOT_FOCUS_GAIN = 20
+
+# ---------------------------------------------------------------------------
+# Celestial Shot
+# ---------------------------------------------------------------------------
+CELESTIAL_SHOT_DAMAGE_MIN = 2591
+CELESTIAL_SHOT_DAMAGE_MAX = 3166
+CELESTIAL_SHOT_FOCUS_COST = 15
+
+# ---------------------------------------------------------------------------
+# Multishot
+# ---------------------------------------------------------------------------
+MULTISHOT_DAMAGE_MIN = 2173
+MULTISHOT_DAMAGE_MAX = 2655
+MULTISHOT_MAX_CHARGES = 5
+MULTISHOT_FOCUS_COST = 20
+MULTISHOT_NUM_SECONDARY_TARGETS = 11
+MULTISHOT_EMPOWERED_MIN_ARROWS = 3
+
+# ---------------------------------------------------------------------------
+# Highwind Arrow
+# ---------------------------------------------------------------------------
+HIGHWIND_ARROW_COOLDOWN = 15.0
+HIGHWIND_ARROW_CAST_TIME = 2.0
+HIGHWIND_ARROW_DAMAGE_MIN = 8370
+HIGHWIND_ARROW_DAMAGE_MAX = 10230
+HIGHWIND_ARROW_MAX_CHARGES = 3
+HIGHWIND_ARROW_FOCUS_COST = 30
+HIGHWIND_ARROW_NUM_SECONDARY_TARGETS = 2
+HIGHWIND_ARROW_SECONDARY_DAMAGE_MULTIPLIER = 0.7
+HIGHWIND_ARROW_FC_DAMAGE_MULTIPLIER = 2.0
+HIGHWIND_ARROW_FC_NUM_SECONDARY_TARGETS = 7
+HIGHWIND_ARROW_RW_PLAYER_DOWNTIME = 1.5
+HIGHWIND_ARROW_RW_DAMAGE_MULTIPLIER = 1.5
+HIGHWIND_ARROW_MULTISHOT_CHARGE_MIN_ENEMIES = 3
+
+# ---------------------------------------------------------------------------
+# Volley
+# ---------------------------------------------------------------------------
+VOLLEY_COOLDOWN = 30.0
+VOLLEY_DAMAGE_MIN = 977
+VOLLEY_DAMAGE_MAX = 1195
+VOLLEY_FOCUS_COST = 30
+VOLLEY_NUM_SECONDARY_TARGETS = 11
+VOLLEY_DURATION = 8.0 + 1e-9  # epsilon ensures tick breakpoints are hit exactly
+VOLLEY_TICK_TIME = 1.0
+
+# ---------------------------------------------------------------------------
+# Heartseeker Barrage
+# ---------------------------------------------------------------------------
+HEARTSEEKER_BARRAGE_COOLDOWN = 20.0
+HEARTSEEKER_BARRAGE_CHANNEL_DURATION = 2.0
+HEARTSEEKER_BARRAGE_DAMAGE_MIN = 1124
+HEARTSEEKER_BARRAGE_DAMAGE_MAX = 1373
+HEARTSEEKER_BARRAGE_TICK_TIME = 0.2
+HEARTSEEKER_BARRAGE_DELAY_UNTIL_HIT = 0.05
+HEARTSEEKER_BARRAGE_FOCUS_COST = 30
+HEARTSEEKER_BARRAGE_IMPENDING_STEP = 0.1
+
+# ---------------------------------------------------------------------------
+# Lunarlight Mark (ability)
+# ---------------------------------------------------------------------------
+LUNARLIGHT_MARK_COOLDOWN = 30.0
+LUNARLIGHT_MARK_NUM_SECONDARY_TARGETS = 11
+LUNARLIGHT_MARK_STACKS = 3
+
+# ---------------------------------------------------------------------------
+# Lunarlight Salvo / Explosion (shared damage values)
+# ---------------------------------------------------------------------------
+LUNARLIGHT_SALVO_DAMAGE_MIN = 2033
+LUNARLIGHT_SALVO_DAMAGE_MAX = 2485
+LUNARLIGHT_EXPLOSION_NUM_SECONDARY_TARGETS = 11
+
+# ---------------------------------------------------------------------------
+# Skystrider Grace (ability)
+# ---------------------------------------------------------------------------
+SKYSTRIDER_GRACE_COOLDOWN = 120.0
+
+# ---------------------------------------------------------------------------
+# Event Horizon (ability)
+# ---------------------------------------------------------------------------
+EVENT_HORIZON_CAST_TIME = 0.7
+EVENT_HORIZON_FOCUS_COST_MULTIPLIER = 0.5
+
+# ---------------------------------------------------------------------------
+# Skystrider Supremacy (ability)
+# ---------------------------------------------------------------------------
+SKYSTRIDER_SUPREMACY_COOLDOWN = 40.0
+
+# ---------------------------------------------------------------------------
+# Skystrider Grace buff
+# ---------------------------------------------------------------------------
+SKYSTRIDER_GRACE_BUFF_DURATION = 20.0
+SKYSTRIDER_GRACE_BUFF_HASTE = 0.30
+
+# ---------------------------------------------------------------------------
+# Event Horizon buff
+# ---------------------------------------------------------------------------
+EVENT_HORIZON_BUFF_DURATION = 20.0
+EVENT_HORIZON_BUFF_DAMAGE_MULTIPLIER = 1.20
+EVENT_HORIZON_HWA_CDR_ON_BARRAGE = 0.5
+EVENT_HORIZON_BARRAGE_CDR_ON_VOLLEY = 1.0
+
+# ---------------------------------------------------------------------------
+# Skystrider Supremacy buff
+# ---------------------------------------------------------------------------
+SKYSTRIDER_SUPREMACY_BUFF_DURATION = 4.0
+
+# ---------------------------------------------------------------------------
+# Fervent Supremacy buff
+# ---------------------------------------------------------------------------
+FERVENT_SUPREMACY_COOLDOWN_REDUCTION = 15.0
+FERVENT_SUPREMACY_BUFF_DURATION = 15.0
+FERVENT_SUPREMACY_BUFF_STACKS = 4
+FERVENT_SUPREMACY_BUFF_BONUS_DAMAGE = 0.25
+
+# ---------------------------------------------------------------------------
+# Empowered Multishot Charge buff
+# ---------------------------------------------------------------------------
+EMPOWERED_MULTISHOT_CHARGE_BUFF_DURATION = 15.0
+EMPOWERED_MULTISHOT_CHARGE_BUFF_STACKS = 1
+EMPOWERED_MULTISHOT_CHARGE_BUFF_MAX_STACKS = 2
+
+# ---------------------------------------------------------------------------
+# Celestial Impetus
+# ---------------------------------------------------------------------------
+CELESTIAL_IMPETUS_PROC_DURATION = 15.0
+CELESTIAL_IMPETUS_PROC_MAX_STACKS = 2
+CELESTIAL_IMPETUS_AURA_MAIN_TARGET_MARK_COUNT = 3
+CELESTIAL_IMPETUS_AURA_PPM = 2.0
+
+# ---------------------------------------------------------------------------
+# Lunarlight Mark effect
+# ---------------------------------------------------------------------------
+LUNARLIGHT_MARK_EFFECT_DURATION = 15.0
+LUNARLIGHT_MARK_EFFECT_MAX_STACKS = 20
+LUNARLIGHT_MARK_EFFECT_EXPLOSION_CHANCE = 0.20
+LUNARLIGHT_MARK_CRIT_PROC_CHANCE = 0.5
+LUNARLIGHT_MARK_NORMAL_PROC_CHANCE = 0.25
+LUNARLIGHT_MARK_TALENTED_PROC_CHANCE_MULTIPLIER = 2  # Talented volley and barrage proc chance multiplier
+
+# ---------------------------------------------------------------------------
+# Spirit Effect
+# ---------------------------------------------------------------------------
+SPIRIT_EFFECT_MAIN_TARGET_MARK_COUNT = 5
+SPIRIT_EFFECT_SECONDARY_TARGET_MARK_COUNT = 2
+SPIRIT_EFFECT_NUM_SECONDARY_TARGETS = 2
+
+# ---------------------------------------------------------------------------
+# Final Crescendo
+# ---------------------------------------------------------------------------
+FINAL_CRESCENDO_MAX_STACKS = 3
+
+# ---------------------------------------------------------------------------
+# Resurgent Winds
+# ---------------------------------------------------------------------------
+RESURGENT_WINDS_DURATION = 15.0
+RESURGENT_WINDS_MAX_STACKS = 2
+
+# ---------------------------------------------------------------------------
+# Impending Heartseeker
+# ---------------------------------------------------------------------------
+IMPENDING_HEARTSEEKER_DURATION = 15.0
+
+# ---------------------------------------------------------------------------
+# Fusillade
+# ---------------------------------------------------------------------------
+FUSILLADE_CRIT_BONUS = 0.20
+FUSILLADE_BARRAGE_CHANNEL_DURATION = 2.5
+
+# ---------------------------------------------------------------------------
+# Focused Expanse
+# ---------------------------------------------------------------------------
+FOCUSED_EXPANSE_PROC_CHANCE = 0.20
+FOCUSED_EXPANSE_MS_BONUS_DAMAGE = 0.25
+
+# ---------------------------------------------------------------------------
+# Last Lights
+# ---------------------------------------------------------------------------
+LAST_LIGHTS_CRIT_BONUS = 0.30
+
+# ---------------------------------------------------------------------------
+# Lethal Shots
+# ---------------------------------------------------------------------------
+LETHAL_SHOTS_PROC_CHANCE = 0.40
+LETHAL_SHOTS_CRIT_BONUS = 1.0
+
+# ---------------------------------------------------------------------------
+# Lunar Fury
+# ---------------------------------------------------------------------------
+LUNAR_FURY_DAMAGE_BONUS = 0.30
+
+# ---------------------------------------------------------------------------
+# Lunarlight Affinity
+# ---------------------------------------------------------------------------
+LUNARLIGHT_AFFINITY_CRIT_BONUS = 0.40
+
+# ---------------------------------------------------------------------------
+# Piercing Seekers talent
+# ---------------------------------------------------------------------------
+PIERCING_SEEKERS_NUM_SECONDARY_TARGETS = 1
+PIERCING_SEEKERS_SECONDARY_DAMAGE_MULTIPLIER = 0.7
+
+# ---------------------------------------------------------------------------
+# Legendary: Boots
+# ---------------------------------------------------------------------------
+LEGENDARY_BOOTS_VOLLEY_DURATION_BONUS = 2.0
+LEGENDARY_BOOTS_MULTISHOT_EXTENDS_DURATION = 0.5
+
+ui.h2("Elarion damage table (standard barrage build)")
+
+with ui.sidebar(title="Parameters"):
+
+    ui.input_slider("crit_chance", "Crit chance", 0, 60, 20, step=2)
+    ui.input_slider("haste", "Haste", 0, 100, 20, step=2)
+    ui.input_slider("crit_multiplier", "Crit multiplier", 1, 1.20, 1, step=.01)
+    ui.input_slider("num_targets", "Number of targets", 1, 15, 1, step=1)
+    ui.input_slider("mark_barraged_fraction", "Fraction of barraged marks", 0, 100, 30, step=10)
+    ui.input_checkbox("normalize", "Normalize Damage", value=True)
+
+def compute_damage(base_damage: float, crit_chance: float, crit_multiplier: float, super_crit_chance: float = 0):
+    average_multiplier = (
+        super_crit_chance * (2 + crit_chance) * crit_multiplier
+        + (1 - super_crit_chance) * (
+            crit_chance * 2 * crit_multiplier
+            + (1 - crit_chance) * 1
+        )
+    )
+    return base_damage * average_multiplier
+
+def player_crit_chance() -> float:
+    return input.crit_chance.get()
+
+def player_crit_multiplier() -> float:
+    bonus = 0
+    return input.crit_multiplier.get()
+
+def ability_crit_chance(is_lunar, is_barrage) -> float:
+    bonus = 0
+    if is_lunar:
+        bonus = 100 * LUNARLIGHT_AFFINITY_CRIT_BONUS
+    if is_barrage:
+        bonus = 100 * FUSILLADE_CRIT_BONUS
+    return (player_crit_chance() + bonus) / 100
+
+def player_haste_percent() -> float:
+    return input.haste.get() / 100
+
+
+class Ability:
+    base_damage: float
+    name: str
+    damage_multiplier: float = 1
+    base_cast_time: float = 1.5
+    max_num_targets: int = 1
+    min_num_targets: int = 1
+    secondary_target_multiplier: float = 1
+    is_lunar: bool = False
+    is_barrage: bool = False
+    super_crit_chance: float = 0
+
+    def __init__(
+        self,
+        base_damage: float,
+        name: str,
+        damage_multiplier: float = 1,
+        base_cast_time: float = 1.5,
+        max_num_targets: int = 1,
+        min_num_targets: int = 1,
+        secondary_target_multiplier: float = 1,
+        is_lunar: bool = False,
+        is_barrage: bool = False,
+        super_crit_chance: float = 0,
+    ):
+        self.base_damage = base_damage
+        self.name = name
+        self.damage_multiplier = damage_multiplier
+        self.base_cast_time = base_cast_time
+        self.max_num_targets = max_num_targets
+        self.min_num_targets = min_num_targets
+        self.secondary_target_multiplier = secondary_target_multiplier
+        self.is_lunar = is_lunar
+        self.is_barrage = is_barrage
+        self.super_crit_chance = super_crit_chance
+
+
+    def total_damage(self) -> float:
+        return self.damage() * self.num_hits()
+
+    def dps(self) -> float:
+        ct = self.cast_time()
+        return self.total_damage() / ct if ct > 0 else float("nan")
+
+    def cast_time(self) -> float:
+        return self.base_cast_time / (1 + player_haste_percent())
+
+    def damage(self) -> float:
+        return compute_damage(
+            self.base_damage * self.damage_multiplier,
+            ability_crit_chance(self.is_lunar, self.is_barrage),
+            player_crit_multiplier(),
+            self.super_crit_chance,
+        )
+
+    def num_hits(self) -> float:
+        num_secondaries = max(self.min_num_targets-1, min(self.max_num_targets-1, input.num_targets.get() - 1))
+        return max(self.min_num_targets, 1 + num_secondaries * self.secondary_target_multiplier)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "name": self.name,
+            "dps": self.dps(),
+            "total_damage": self.total_damage(),
+            "cast_time": self.cast_time(),
+            "damage": self.damage(),
+            "num_hits": self.num_hits(),
+            "multiplier": self.damage_multiplier,
+        }
+
+class EmpoweredMultishot(Ability):
+    base_damage: float = (MULTISHOT_DAMAGE_MIN + MULTISHOT_DAMAGE_MAX) / 2
+
+    min_num_targets: int = 3
+    max_num_targets: int = 12
+    damage_bonus: float = 0.0
+
+    def __init__(
+        self,
+        name: str,
+        damage_bonus: float = 0.0,
+    ):
+        self.name = name
+        self.damage_bonus = damage_bonus
+
+    @property
+    def damage_multiplier(self) -> float:
+        ans = 1.0 + self.damage_bonus
+        # if input.FE:  # TODO
+        #     ans += 0.25
+        return ans
+
+class Barrage(Ability):
+    base_damage: float = (HEARTSEEKER_BARRAGE_DAMAGE_MIN + HEARTSEEKER_BARRAGE_DAMAGE_MAX) / 2
+
+    base_cast_time: float = 2.5
+    tick_duration: float = 0.2
+    damage_step: float = 0.0
+    max_num_targets: int = 2
+    secondary_target_multiplier: float = 0.7
+
+    is_barrage: bool = True
+
+    def __init__(
+        self,
+        name: str,
+        damage_step: float = 0.0,
+    ):
+        self.name = name
+        self.damage_step = damage_step
+
+    def cast_time(self) -> float:
+        return self.base_cast_time
+
+    def num_ticks(self) -> int:
+        return math.floor(self.base_cast_time / self.tick_duration * (1 + player_haste_percent()))
+
+    def num_hits(self) -> float:
+        num_targets = super().num_hits()
+        return num_targets * self.num_ticks()
+
+    @property
+    def damage_multiplier(self) -> float:
+        return (1 + (self.num_ticks() -1) * self.damage_step / 2)
+
+
+class Volley(Ability):
+    duration: float = 8.0
+    tick_duration: float = 1
+    base_damage = (VOLLEY_DAMAGE_MIN+VOLLEY_DAMAGE_MAX)/2
+    max_num_targets = 12
+
+    def __init__(self):
+        self.name = "Volley"
+
+    def num_ticks(self) -> int:
+        return 1 + math.floor(self.duration / self.tick_duration * (1 + player_haste_percent()))
+
+    def num_hits(self) -> float:
+        num_targets = super().num_hits()
+        return num_targets * self.num_ticks()
+
+
+class AbilityAddition(Ability):
+
+    def __init__(self, name: str, ability_list: list[Ability]):
+        self.name = name
+        self.ability_list = ability_list
+
+    def dps(self):
+        return self.total_damage() / self.cast_time()
+
+    def total_damage(self):
+        return sum([ability.total_damage() for ability in self.ability_list])
+
+    def cast_time(self):
+        return sum([ability.cast_time() for ability in self.ability_list])
+
+    def damage(self):
+        return float("nan")
+
+    def num_hits(self):
+        return float("nan")
+
+    @property
+    def damage_multiplier(self):
+        return float("nan")
+
+
+with ui.card():
+    ui.card_header("Ability damage information")
+
+
+    @render.data_frame  
+    def penguins_df():
+        n_targets = input.num_targets.get()
+        mark_barraged_fraction = input.mark_barraged_fraction.get() / 100
+        llm_multiplier = 1 + min(11, n_targets - 1) * 0.2 * mark_barraged_fraction
+
+        salvo_average_damage = (LUNARLIGHT_SALVO_DAMAGE_MIN+LUNARLIGHT_SALVO_DAMAGE_MAX)/2 * (1 + LUNAR_FURY_DAMAGE_BONUS)
+
+        celestial_shot = Ability(name="Celestial Shot", base_damage=(CELESTIAL_SHOT_DAMAGE_MIN+CELESTIAL_SHOT_DAMAGE_MAX)/2)
+        focused_shot = Ability(name="Focused Shot", base_damage=(FOCUSED_SHOT_DAMAGE_MIN+FOCUSED_SHOT_DAMAGE_MAX)/2)
+        multishot = Ability(name="Multishot", base_damage=(MULTISHOT_DAMAGE_MIN + MULTISHOT_DAMAGE_MAX) / 2, max_num_targets=12)
+        empowered_multishot = EmpoweredMultishot(name="Empowered Multishot")
+        fervent_multishot = EmpoweredMultishot(name="Fervent Multishot", damage_bonus=FERVENT_SUPREMACY_BUFF_BONUS_DAMAGE)
+        barrage = Barrage(name="Heartseeker Barrage")
+        impending_barrage = Barrage(name="Impending Heartseeker", damage_step=0.1)
+        volley = Volley()
+        highwind = Ability(name="Highwind Arrow", base_damage=(HIGHWIND_ARROW_DAMAGE_MIN+HIGHWIND_ARROW_DAMAGE_MAX)/2, max_num_targets=3, secondary_target_multiplier=0.7, base_cast_time=2.0)
+        lunarlight = Ability(name="Lunarlight Mark", base_damage=salvo_average_damage * 3, max_num_targets=12, base_cast_time=0.0, damage_multiplier=llm_multiplier, is_lunar=True)
+        ci_proc = Ability(name="Celestial Impetus Proc", base_damage=salvo_average_damage * 3, base_cast_time=0.0, damage_multiplier=llm_multiplier)
+
+        fs_cs_ci_proc = AbilityAddition(name="FS > CS + CI", ability_list=[focused_shot, celestial_shot, ci_proc])
+        fs_cs_ci_proc_ibh = AbilityAddition(name="FS > CS + CI > IHB", ability_list=[focused_shot, celestial_shot, ci_proc, impending_barrage])
+
+        hwa_barrage = AbilityAddition(name="hwa > MS", ability_list=[highwind, multishot])
+        
+        abilities: list[Ability] = [
+            lunarlight,
+            impending_barrage,
+            fs_cs_ci_proc_ibh,
+            volley,
+            barrage,
+            fervent_multishot,
+            empowered_multishot,
+            highwind,
+            multishot,
+            hwa_barrage,
+            celestial_shot,
+            ci_proc,
+            fs_cs_ci_proc,
+            focused_shot,
+        ]
+
+        ability_dataframe = pd.DataFrame([a.to_dict() for a in abilities])
+
+        cs_damage = celestial_shot.total_damage()
+        cs_dps = celestial_shot.dps()
+
+        if input.normalize.get():
+            ability_dataframe["total_damage"] /= cs_damage
+            ability_dataframe["dps"] /= cs_dps
+
+        ability_dataframe["total_damage"] = ability_dataframe["total_damage"].round(2)
+        ability_dataframe["dps"] = ability_dataframe["dps"].round(2)
+        ability_dataframe["cast_time"] = ability_dataframe["cast_time"].round(2)
+        ability_dataframe["damage"] = ability_dataframe["damage"].round(0)
+        ability_dataframe["num_hits"] = ability_dataframe["num_hits"].round(2)
+        ability_dataframe["multiplier"] = ability_dataframe["multiplier"].round(2)
+
+        return ability_dataframe
+
+
+```
+
+:::

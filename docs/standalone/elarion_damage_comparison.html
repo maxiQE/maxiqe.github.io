@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.13">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Elarion damage calculator – MaxiQE</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-7a350d08fecf1a9c41ceb75f728b6e9e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c36921380097dd90903e125cd5863849.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.10.8/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.10.8/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.10.8/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">MaxiQE</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../standalone/optimal_gem_setups.html"> 
+<span class="menu-text">Fellowship Gems</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../standalone/elarion_damage_comparison.html" aria-current="page"> 
+<span class="menu-text">Elarion damage calculator</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Elarion damage calculator</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="column-screen-inset">
+<pre class="shinylive-python" data-engine="python"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+# | standalone: true
+# | viewerHeight: 720
+from typing import Any
+from shiny.express import ui, input, render
+import math
+import pandas as pd
+
+# ---------------------------------------------------------------------------
+# Focused Shot
+# ---------------------------------------------------------------------------
+FOCUSED_SHOT_DAMAGE_MIN = 1212
+FOCUSED_SHOT_DAMAGE_MAX = 1481
+FOCUSED_SHOT_CAST_TIME = 1.5
+FOCUSED_SHOT_FOCUS_GAIN = 20
+
+# ---------------------------------------------------------------------------
+# Celestial Shot
+# ---------------------------------------------------------------------------
+CELESTIAL_SHOT_DAMAGE_MIN = 2591
+CELESTIAL_SHOT_DAMAGE_MAX = 3166
+CELESTIAL_SHOT_FOCUS_COST = 15
+
+# ---------------------------------------------------------------------------
+# Multishot
+# ---------------------------------------------------------------------------
+MULTISHOT_DAMAGE_MIN = 2173
+MULTISHOT_DAMAGE_MAX = 2655
+MULTISHOT_MAX_CHARGES = 5
+MULTISHOT_FOCUS_COST = 20
+MULTISHOT_NUM_SECONDARY_TARGETS = 11
+MULTISHOT_EMPOWERED_MIN_ARROWS = 3
+
+# ---------------------------------------------------------------------------
+# Highwind Arrow
+# ---------------------------------------------------------------------------
+HIGHWIND_ARROW_COOLDOWN = 15.0
+HIGHWIND_ARROW_CAST_TIME = 2.0
+HIGHWIND_ARROW_DAMAGE_MIN = 8370
+HIGHWIND_ARROW_DAMAGE_MAX = 10230
+HIGHWIND_ARROW_MAX_CHARGES = 3
+HIGHWIND_ARROW_FOCUS_COST = 30
+HIGHWIND_ARROW_NUM_SECONDARY_TARGETS = 2
+HIGHWIND_ARROW_SECONDARY_DAMAGE_MULTIPLIER = 0.7
+HIGHWIND_ARROW_FC_DAMAGE_MULTIPLIER = 2.0
+HIGHWIND_ARROW_FC_NUM_SECONDARY_TARGETS = 7
+HIGHWIND_ARROW_RW_PLAYER_DOWNTIME = 1.5
+HIGHWIND_ARROW_RW_DAMAGE_MULTIPLIER = 1.5
+HIGHWIND_ARROW_MULTISHOT_CHARGE_MIN_ENEMIES = 3
+
+# ---------------------------------------------------------------------------
+# Volley
+# ---------------------------------------------------------------------------
+VOLLEY_COOLDOWN = 30.0
+VOLLEY_DAMAGE_MIN = 977
+VOLLEY_DAMAGE_MAX = 1195
+VOLLEY_FOCUS_COST = 30
+VOLLEY_NUM_SECONDARY_TARGETS = 11
+VOLLEY_DURATION = 8.0 + 1e-9  # epsilon ensures tick breakpoints are hit exactly
+VOLLEY_TICK_TIME = 1.0
+
+# ---------------------------------------------------------------------------
+# Heartseeker Barrage
+# ---------------------------------------------------------------------------
+HEARTSEEKER_BARRAGE_COOLDOWN = 20.0
+HEARTSEEKER_BARRAGE_CHANNEL_DURATION = 2.0
+HEARTSEEKER_BARRAGE_DAMAGE_MIN = 1124
+HEARTSEEKER_BARRAGE_DAMAGE_MAX = 1373
+HEARTSEEKER_BARRAGE_TICK_TIME = 0.2
+HEARTSEEKER_BARRAGE_DELAY_UNTIL_HIT = 0.05
+HEARTSEEKER_BARRAGE_FOCUS_COST = 30
+HEARTSEEKER_BARRAGE_IMPENDING_STEP = 0.1
+
+# ---------------------------------------------------------------------------
+# Lunarlight Mark (ability)
+# ---------------------------------------------------------------------------
+LUNARLIGHT_MARK_COOLDOWN = 30.0
+LUNARLIGHT_MARK_NUM_SECONDARY_TARGETS = 11
+LUNARLIGHT_MARK_STACKS = 3
+
+# ---------------------------------------------------------------------------
+# Lunarlight Salvo / Explosion (shared damage values)
+# ---------------------------------------------------------------------------
+LUNARLIGHT_SALVO_DAMAGE_MIN = 2033
+LUNARLIGHT_SALVO_DAMAGE_MAX = 2485
+LUNARLIGHT_EXPLOSION_NUM_SECONDARY_TARGETS = 11
+
+# ---------------------------------------------------------------------------
+# Skystrider Grace (ability)
+# ---------------------------------------------------------------------------
+SKYSTRIDER_GRACE_COOLDOWN = 120.0
+
+# ---------------------------------------------------------------------------
+# Event Horizon (ability)
+# ---------------------------------------------------------------------------
+EVENT_HORIZON_CAST_TIME = 0.7
+EVENT_HORIZON_FOCUS_COST_MULTIPLIER = 0.5
+
+# ---------------------------------------------------------------------------
+# Skystrider Supremacy (ability)
+# ---------------------------------------------------------------------------
+SKYSTRIDER_SUPREMACY_COOLDOWN = 40.0
+
+# ---------------------------------------------------------------------------
+# Skystrider Grace buff
+# ---------------------------------------------------------------------------
+SKYSTRIDER_GRACE_BUFF_DURATION = 20.0
+SKYSTRIDER_GRACE_BUFF_HASTE = 0.30
+
+# ---------------------------------------------------------------------------
+# Event Horizon buff
+# ---------------------------------------------------------------------------
+EVENT_HORIZON_BUFF_DURATION = 20.0
+EVENT_HORIZON_BUFF_DAMAGE_MULTIPLIER = 1.20
+EVENT_HORIZON_HWA_CDR_ON_BARRAGE = 0.5
+EVENT_HORIZON_BARRAGE_CDR_ON_VOLLEY = 1.0
+
+# ---------------------------------------------------------------------------
+# Skystrider Supremacy buff
+# ---------------------------------------------------------------------------
+SKYSTRIDER_SUPREMACY_BUFF_DURATION = 4.0
+
+# ---------------------------------------------------------------------------
+# Fervent Supremacy buff
+# ---------------------------------------------------------------------------
+FERVENT_SUPREMACY_COOLDOWN_REDUCTION = 15.0
+FERVENT_SUPREMACY_BUFF_DURATION = 15.0
+FERVENT_SUPREMACY_BUFF_STACKS = 4
+FERVENT_SUPREMACY_BUFF_BONUS_DAMAGE = 0.25
+
+# ---------------------------------------------------------------------------
+# Empowered Multishot Charge buff
+# ---------------------------------------------------------------------------
+EMPOWERED_MULTISHOT_CHARGE_BUFF_DURATION = 15.0
+EMPOWERED_MULTISHOT_CHARGE_BUFF_STACKS = 1
+EMPOWERED_MULTISHOT_CHARGE_BUFF_MAX_STACKS = 2
+
+# ---------------------------------------------------------------------------
+# Celestial Impetus
+# ---------------------------------------------------------------------------
+CELESTIAL_IMPETUS_PROC_DURATION = 15.0
+CELESTIAL_IMPETUS_PROC_MAX_STACKS = 2
+CELESTIAL_IMPETUS_AURA_MAIN_TARGET_MARK_COUNT = 3
+CELESTIAL_IMPETUS_AURA_PPM = 2.0
+
+# ---------------------------------------------------------------------------
+# Lunarlight Mark effect
+# ---------------------------------------------------------------------------
+LUNARLIGHT_MARK_EFFECT_DURATION = 15.0
+LUNARLIGHT_MARK_EFFECT_MAX_STACKS = 20
+LUNARLIGHT_MARK_EFFECT_EXPLOSION_CHANCE = 0.20
+LUNARLIGHT_MARK_CRIT_PROC_CHANCE = 0.5
+LUNARLIGHT_MARK_NORMAL_PROC_CHANCE = 0.25
+LUNARLIGHT_MARK_TALENTED_PROC_CHANCE_MULTIPLIER = 2  # Talented volley and barrage proc chance multiplier
+
+# ---------------------------------------------------------------------------
+# Spirit Effect
+# ---------------------------------------------------------------------------
+SPIRIT_EFFECT_MAIN_TARGET_MARK_COUNT = 5
+SPIRIT_EFFECT_SECONDARY_TARGET_MARK_COUNT = 2
+SPIRIT_EFFECT_NUM_SECONDARY_TARGETS = 2
+
+# ---------------------------------------------------------------------------
+# Final Crescendo
+# ---------------------------------------------------------------------------
+FINAL_CRESCENDO_MAX_STACKS = 3
+
+# ---------------------------------------------------------------------------
+# Resurgent Winds
+# ---------------------------------------------------------------------------
+RESURGENT_WINDS_DURATION = 15.0
+RESURGENT_WINDS_MAX_STACKS = 2
+
+# ---------------------------------------------------------------------------
+# Impending Heartseeker
+# ---------------------------------------------------------------------------
+IMPENDING_HEARTSEEKER_DURATION = 15.0
+
+# ---------------------------------------------------------------------------
+# Fusillade
+# ---------------------------------------------------------------------------
+FUSILLADE_CRIT_BONUS = 0.20
+FUSILLADE_BARRAGE_CHANNEL_DURATION = 2.5
+
+# ---------------------------------------------------------------------------
+# Focused Expanse
+# ---------------------------------------------------------------------------
+FOCUSED_EXPANSE_PROC_CHANCE = 0.20
+FOCUSED_EXPANSE_MS_BONUS_DAMAGE = 0.25
+
+# ---------------------------------------------------------------------------
+# Last Lights
+# ---------------------------------------------------------------------------
+LAST_LIGHTS_CRIT_BONUS = 0.30
+
+# ---------------------------------------------------------------------------
+# Lethal Shots
+# ---------------------------------------------------------------------------
+LETHAL_SHOTS_PROC_CHANCE = 0.40
+LETHAL_SHOTS_CRIT_BONUS = 1.0
+
+# ---------------------------------------------------------------------------
+# Lunar Fury
+# ---------------------------------------------------------------------------
+LUNAR_FURY_DAMAGE_BONUS = 0.30
+
+# ---------------------------------------------------------------------------
+# Lunarlight Affinity
+# ---------------------------------------------------------------------------
+LUNARLIGHT_AFFINITY_CRIT_BONUS = 0.40
+
+# ---------------------------------------------------------------------------
+# Piercing Seekers talent
+# ---------------------------------------------------------------------------
+PIERCING_SEEKERS_NUM_SECONDARY_TARGETS = 1
+PIERCING_SEEKERS_SECONDARY_DAMAGE_MULTIPLIER = 0.7
+
+# ---------------------------------------------------------------------------
+# Legendary: Boots
+# ---------------------------------------------------------------------------
+LEGENDARY_BOOTS_VOLLEY_DURATION_BONUS = 2.0
+LEGENDARY_BOOTS_MULTISHOT_EXTENDS_DURATION = 0.5
+
+ui.h2("Elarion damage table (standard barrage build)")
+
+with ui.sidebar(title="Parameters"):
+
+    ui.input_slider("crit_chance", "Crit chance", 0, 60, 20, step=2)
+    ui.input_slider("haste", "Haste", 0, 100, 20, step=2)
+    ui.input_slider("crit_multiplier", "Crit multiplier", 1, 1.20, 1, step=.01)
+    ui.input_slider("num_targets", "Number of targets", 1, 15, 1, step=1)
+    ui.input_slider("mark_barraged_fraction", "Fraction of barraged marks", 0, 100, 30, step=10)
+    ui.input_checkbox("normalize", "Normalize Damage", value=True)
+
+def compute_damage(base_damage: float, crit_chance: float, crit_multiplier: float, super_crit_chance: float = 0):
+    average_multiplier = (
+        super_crit_chance * (2 + crit_chance) * crit_multiplier
+        + (1 - super_crit_chance) * (
+            crit_chance * 2 * crit_multiplier
+            + (1 - crit_chance) * 1
+        )
+    )
+    return base_damage * average_multiplier
+
+def player_crit_chance() -&gt; float:
+    return input.crit_chance.get()
+
+def player_crit_multiplier() -&gt; float:
+    bonus = 0
+    return input.crit_multiplier.get()
+
+def ability_crit_chance(is_lunar, is_barrage) -&gt; float:
+    bonus = 0
+    if is_lunar:
+        bonus = 100 * LUNARLIGHT_AFFINITY_CRIT_BONUS
+    if is_barrage:
+        bonus = 100 * FUSILLADE_CRIT_BONUS
+    return (player_crit_chance() + bonus) / 100
+
+def player_haste_percent() -&gt; float:
+    return input.haste.get() / 100
+
+
+class Ability:
+    base_damage: float
+    name: str
+    damage_multiplier: float = 1
+    base_cast_time: float = 1.5
+    max_num_targets: int = 1
+    min_num_targets: int = 1
+    secondary_target_multiplier: float = 1
+    is_lunar: bool = False
+    is_barrage: bool = False
+    super_crit_chance: float = 0
+
+    def __init__(
+        self,
+        base_damage: float,
+        name: str,
+        damage_multiplier: float = 1,
+        base_cast_time: float = 1.5,
+        max_num_targets: int = 1,
+        min_num_targets: int = 1,
+        secondary_target_multiplier: float = 1,
+        is_lunar: bool = False,
+        is_barrage: bool = False,
+        super_crit_chance: float = 0,
+    ):
+        self.base_damage = base_damage
+        self.name = name
+        self.damage_multiplier = damage_multiplier
+        self.base_cast_time = base_cast_time
+        self.max_num_targets = max_num_targets
+        self.min_num_targets = min_num_targets
+        self.secondary_target_multiplier = secondary_target_multiplier
+        self.is_lunar = is_lunar
+        self.is_barrage = is_barrage
+        self.super_crit_chance = super_crit_chance
+
+
+    def total_damage(self) -&gt; float:
+        return self.damage() * self.num_hits()
+
+    def dps(self) -&gt; float:
+        ct = self.cast_time()
+        return self.total_damage() / ct if ct &gt; 0 else float("nan")
+
+    def cast_time(self) -&gt; float:
+        return self.base_cast_time / (1 + player_haste_percent())
+
+    def damage(self) -&gt; float:
+        return compute_damage(
+            self.base_damage * self.damage_multiplier,
+            ability_crit_chance(self.is_lunar, self.is_barrage),
+            player_crit_multiplier(),
+            self.super_crit_chance,
+        )
+
+    def num_hits(self) -&gt; float:
+        num_secondaries = max(self.min_num_targets-1, min(self.max_num_targets-1, input.num_targets.get() - 1))
+        return max(self.min_num_targets, 1 + num_secondaries * self.secondary_target_multiplier)
+
+    def to_dict(self) -&gt; dict[str, Any]:
+        return {
+            "name": self.name,
+            "dps": self.dps(),
+            "total_damage": self.total_damage(),
+            "cast_time": self.cast_time(),
+            "damage": self.damage(),
+            "num_hits": self.num_hits(),
+            "multiplier": self.damage_multiplier,
+        }
+
+class EmpoweredMultishot(Ability):
+    base_damage: float = (MULTISHOT_DAMAGE_MIN + MULTISHOT_DAMAGE_MAX) / 2
+
+    min_num_targets: int = 3
+    max_num_targets: int = 12
+    damage_bonus: float = 0.0
+
+    def __init__(
+        self,
+        name: str,
+        damage_bonus: float = 0.0,
+    ):
+        self.name = name
+        self.damage_bonus = damage_bonus
+
+    @property
+    def damage_multiplier(self) -&gt; float:
+        ans = 1.0 + self.damage_bonus
+        # if input.FE:  # TODO
+        #     ans += 0.25
+        return ans
+
+class Barrage(Ability):
+    base_damage: float = (HEARTSEEKER_BARRAGE_DAMAGE_MIN + HEARTSEEKER_BARRAGE_DAMAGE_MAX) / 2
+
+    base_cast_time: float = 2.5
+    tick_duration: float = 0.2
+    damage_step: float = 0.0
+    max_num_targets: int = 2
+    secondary_target_multiplier: float = 0.7
+
+    is_barrage: bool = True
+
+    def __init__(
+        self,
+        name: str,
+        damage_step: float = 0.0,
+    ):
+        self.name = name
+        self.damage_step = damage_step
+
+    def cast_time(self) -&gt; float:
+        return self.base_cast_time
+
+    def num_ticks(self) -&gt; int:
+        return math.floor(self.base_cast_time / self.tick_duration * (1 + player_haste_percent()))
+
+    def num_hits(self) -&gt; float:
+        num_targets = super().num_hits()
+        return num_targets * self.num_ticks()
+
+    @property
+    def damage_multiplier(self) -&gt; float:
+        return (1 + (self.num_ticks() -1) * self.damage_step / 2)
+
+
+class Volley(Ability):
+    duration: float = 8.0
+    tick_duration: float = 1
+    base_damage = (VOLLEY_DAMAGE_MIN+VOLLEY_DAMAGE_MAX)/2
+    max_num_targets = 12
+
+    def __init__(self):
+        self.name = "Volley"
+
+    def num_ticks(self) -&gt; int:
+        return 1 + math.floor(self.duration / self.tick_duration * (1 + player_haste_percent()))
+
+    def num_hits(self) -&gt; float:
+        num_targets = super().num_hits()
+        return num_targets * self.num_ticks()
+
+
+class AbilityAddition(Ability):
+
+    def __init__(self, name: str, ability_list: list[Ability]):
+        self.name = name
+        self.ability_list = ability_list
+
+    def dps(self):
+        return self.total_damage() / self.cast_time()
+
+    def total_damage(self):
+        return sum([ability.total_damage() for ability in self.ability_list])
+
+    def cast_time(self):
+        return sum([ability.cast_time() for ability in self.ability_list])
+
+    def damage(self):
+        return float("nan")
+
+    def num_hits(self):
+        return float("nan")
+
+    @property
+    def damage_multiplier(self):
+        return float("nan")
+
+
+with ui.card():
+    ui.card_header("Ability damage information")
+
+
+    @render.data_frame  
+    def penguins_df():
+        n_targets = input.num_targets.get()
+        mark_barraged_fraction = input.mark_barraged_fraction.get() / 100
+        llm_multiplier = 1 + min(11, n_targets - 1) * 0.2 * mark_barraged_fraction
+
+        salvo_average_damage = (LUNARLIGHT_SALVO_DAMAGE_MIN+LUNARLIGHT_SALVO_DAMAGE_MAX)/2 * (1 + LUNAR_FURY_DAMAGE_BONUS)
+
+        celestial_shot = Ability(name="Celestial Shot", base_damage=(CELESTIAL_SHOT_DAMAGE_MIN+CELESTIAL_SHOT_DAMAGE_MAX)/2)
+        focused_shot = Ability(name="Focused Shot", base_damage=(FOCUSED_SHOT_DAMAGE_MIN+FOCUSED_SHOT_DAMAGE_MAX)/2)
+        multishot = Ability(name="Multishot", base_damage=(MULTISHOT_DAMAGE_MIN + MULTISHOT_DAMAGE_MAX) / 2, max_num_targets=12)
+        empowered_multishot = EmpoweredMultishot(name="Empowered Multishot")
+        fervent_multishot = EmpoweredMultishot(name="Fervent Multishot", damage_bonus=FERVENT_SUPREMACY_BUFF_BONUS_DAMAGE)
+        barrage = Barrage(name="Heartseeker Barrage")
+        impending_barrage = Barrage(name="Impending Heartseeker", damage_step=0.1)
+        volley = Volley()
+        highwind = Ability(name="Highwind Arrow", base_damage=(HIGHWIND_ARROW_DAMAGE_MIN+HIGHWIND_ARROW_DAMAGE_MAX)/2, max_num_targets=3, secondary_target_multiplier=0.7, base_cast_time=2.0)
+        lunarlight = Ability(name="Lunarlight Mark", base_damage=salvo_average_damage * 3, max_num_targets=12, base_cast_time=0.0, damage_multiplier=llm_multiplier, is_lunar=True)
+        ci_proc = Ability(name="Celestial Impetus Proc", base_damage=salvo_average_damage * 3, base_cast_time=0.0, damage_multiplier=llm_multiplier)
+
+        fs_cs_ci_proc = AbilityAddition(name="FS &gt; CS + CI", ability_list=[focused_shot, celestial_shot, ci_proc])
+        fs_cs_ci_proc_ibh = AbilityAddition(name="FS &gt; CS + CI &gt; IHB", ability_list=[focused_shot, celestial_shot, ci_proc, impending_barrage])
+
+        hwa_barrage = AbilityAddition(name="hwa &gt; MS", ability_list=[highwind, multishot])
+        
+        abilities: list[Ability] = [
+            lunarlight,
+            impending_barrage,
+            fs_cs_ci_proc_ibh,
+            volley,
+            barrage,
+            fervent_multishot,
+            empowered_multishot,
+            highwind,
+            multishot,
+            hwa_barrage,
+            celestial_shot,
+            ci_proc,
+            fs_cs_ci_proc,
+            focused_shot,
+        ]
+
+        ability_dataframe = pd.DataFrame([a.to_dict() for a in abilities])
+
+        cs_damage = celestial_shot.total_damage()
+        cs_dps = celestial_shot.dps()
+
+        if input.normalize.get():
+            ability_dataframe["total_damage"] /= cs_damage
+            ability_dataframe["dps"] /= cs_dps
+
+        ability_dataframe["total_damage"] = ability_dataframe["total_damage"].round(2)
+        ability_dataframe["dps"] = ability_dataframe["dps"].round(2)
+        ability_dataframe["cast_time"] = ability_dataframe["cast_time"].round(2)
+        ability_dataframe["damage"] = ability_dataframe["damage"].round(0)
+        ability_dataframe["num_hits"] = ability_dataframe["num_hits"].round(2)
+        ability_dataframe["multiplier"] = ability_dataframe["multiplier"].round(2)
+
+        return ability_dataframe
+
+</code></pre>
+</div>
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("maxiqe\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

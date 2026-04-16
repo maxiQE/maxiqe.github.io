@@ -10,6 +10,7 @@ website:
     navbar:
         left:
             - standalone/optimal_gem_setups.qmd
+            - standalone/elarion_damage_comparison.qmd
 
 execute:
     freeze: auto
