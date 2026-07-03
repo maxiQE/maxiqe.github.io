@@ -1,0 +1,263 @@
+---
+title: Fellowship Crafter Explainer
+format: html
+filters:
+  - shinylive
+---
+
+
+:::{.column-screen-inset}
+
+```{shinylive-python}
+# | standalone: true
+# | viewerHeight: 720
+import random
+from typing import Any
+
+from faicons import icon_svg
+from shiny import reactive
+from shiny.express import input, render, ui
+
+ITEM_SLOT_TYPES = {
+    "Weapon": {
+        "slot_1": (False, "Weapon Ability"),
+        "slot_2": (True, "Weapon Tree"),
+        "slot_3": (True, None),
+    },
+    "Trinket": {
+        "slot_1": (False, "Trinket Ability"),
+        "slot_2": (True, None),
+        "slot_3": (True, None),
+    },
+    "Neck": {
+        "slot_1": (True, None),
+        "slot_2": (False, "Neck Tree"),
+        "slot_3": (True, None),
+    },
+    "Ring / Cape / Wrist": {
+        "slot_1": (True, None),
+        "slot_2": (True, "Gem Socket"),
+        "slot_3": (True, None),
+    },
+    "Other": {
+        "slot_1": (True, None),
+        "slot_2": (True, None),
+        "slot_3": (True, None),
+    },
+}
+
+CANT_BE_SET = ("Weapon", "Trinket")
+
+RARITY = {
+    "uncommon": (1, 0),
+    "rare": (1, 1),
+    "epic": (1, 2),
+    "champion": (2, 2),
+    "regal": (2, 3),
+}
+
+SLOT_TYPES = {
+    "gem power": ["red", "purple", "yellow", "green", "blue", "white"],
+    "stats": ["stamina", "main", "crit", "expertise", "haste", "spirit"],
+    "master trait": ["visions", "emerald judgement", "brave machinations"],
+    "heroic trait": ["kindling", "seized opportunity"],
+    "defensive trait": ["king of the hill", "last man standing"],
+    "blessing": ["the sinister", "the herald", "the mystic", "the monarch", "the philosopher"],
+}
+
+item = {
+    "rarity": ...,
+    "stats": [],
+    "slots": [],
+}
+
+
+def random_slot(excluded_type=None):
+    slot_types = [slot for slot in SLOT_TYPES if slot is not excluded_type]
+    type = random.choice(slot_types)
+    choice = random.choice(SLOT_TYPES[type])
+    return [type, choice, "Random"]
+
+
+def random_stat():
+    return [random.choice(SLOT_TYPES["stats"]), "Random"]
+
+
+def random_item(rarity, slot="Other", is_set=False):
+    is_set = slot not in CANT_BE_SET and is_set
+    n_stats, n_slots = RARITY[rarity]
+
+    slot_spec = {**ITEM_SLOT_TYPES[slot]}
+
+    if is_set:
+        for idx in range(1, 4):
+            if not is_set:
+                break
+            key = f"slot_{idx}"
+            if slot_spec[key][0]:
+                assert slot_spec[key][1] is None, f"Erased existing key: {key = }, {slot_spec[key] = }, {slot_spec = }"
+                slot_spec[key] = (False, "Set")
+                is_set = False
+
+    item: dict[str, Any] = {"special": [], "rarity": rarity, "slot": slot}
+
+    for idx in range(1, n_stats + 1):
+        item[f"Turquoise stat {idx}"] = random_stat()
+
+    types = []
+
+    for idx in range(1, n_slots + 1):
+        key = f"slot_{idx}"
+        spec = slot_spec[key]
+
+        if spec[0]:
+            excluded_type = next((t for t in set(types) if types.count(t) >= 2), None)
+            item[key] = random_slot(excluded_type)
+            types.append(item[key][0])
+
+        else:
+            item[key] = (None, None, None)
+
+        if spec[1] is not None:
+            item["special"].append(spec[1])
+
+    return item, slot_spec
+
+
+def upgrade_rarity(item, slot_spec):
+    item = {**item}
+    rarity = item["rarity"]
+
+    if rarity == "regal":
+        return item
+
+    n_stats, n_slots = RARITY[rarity]
+
+    rarity_order = list(RARITY)
+    next_rarity = rarity_order[rarity_order.index(rarity) + 1]
+    n_new_stats, n_new_slots = RARITY[next_rarity][0] - n_stats, RARITY[next_rarity][1] - n_slots
+
+    if n_new_stats == 1:
+        item["Turquoise stat 2"] = [*item["Turquoise stat 1"]]
+        item["Turquoise stat 2"][1] = "Flooded (100% chance)"
+
+    # count current types
+    existing_rolls = [item[f"slot_{idx}"] for idx in range(1, n_slots + 1) if item[f"slot_{idx}"][0] is not None]
+    types = [slot[0] for slot in existing_rolls]
+
+    for idx in range(n_slots + 1, n_slots + n_new_slots + 1):
+        key = f"slot_{idx}"
+
+        spec = slot_spec[key]
+
+        if spec[0]:
+            # list existing floodable slots
+            existing_rolls = [
+                item[f"slot_{idx}"] for idx in range(1, n_slots + 1) if item[f"slot_{idx}"][0] is not None
+            ]
+            types = [slot[0] for slot in existing_rolls]
+            excluded_type = next((t for t in set(types) if types.count(t) >= 2), None)
+
+            floodable_slots = [slot for slot in existing_rolls if slot[0] not in (None, excluded_type)]
+
+            if len(floodable_slots):
+                item[key] = [*random.choice(floodable_slots)]
+                chance = 100 // len(floodable_slots)
+                item[key][2] = f"Flooded ({chance}% chance)"
+
+            else:
+                item[key] = random_slot(excluded_type=excluded_type)
+
+        else:
+            item[key] = (None, None, None)
+
+        if spec[1] is not None:
+            item["special"].append(spec[1])
+
+    item["rarity"] = next_rarity
+
+    return item
+
+
+ui.head_content(
+    ui.tags.style("""
+        .item-card { font-family: sans-serif; line-height: 1.6; }
+        .item-card .slot-line { margin-left: 1em; }
+        .item-card .blocked { color: #999; font-style: italic; }
+
+        /* simple example: color the rarity text per-rarity via a CSS class */
+        .rarity-uncommon { color: #11fa21; font-weight: bold; }
+        .rarity-rare     { color: #3b82f6; font-weight: bold; }
+        .rarity-epic     { color: #a855f7; font-weight: bold; }
+        .rarity-champion { color: #faee11; font-weight: bold; }
+        .rarity-regal    { color: #f54927; font-weight: bold; }
+    """)
+)
+
+current_item = reactive.value(None)
+current_slot_spec = reactive.value(None)
+
+ui.input_select("rarity", "Rarity", choices=list(RARITY.keys()))
+ui.input_select("slot", "Slot", choices=list(ITEM_SLOT_TYPES.keys()))
+ui.input_switch("is_set", "Is set item", value=False)
+ui.input_action_button("generate", "Generate random item")
+ui.input_action_button("upgrade", "Upgrade rarity")
+
+ui.hr()
+
+
+@reactive.effect
+def _():
+    if input.slot() in CANT_BE_SET:
+        ui.update_switch("is_set", value=False)
+
+
+@reactive.effect
+@reactive.event(input.generate)
+def _():
+    item, slot_spec = random_item(input.rarity(), input.slot(), input.is_set())
+    current_item.set(item)
+    current_slot_spec.set(slot_spec)
+
+
+@reactive.effect
+@reactive.event(input.upgrade)
+def _():
+    item = current_item()
+    if item is not None:
+        current_item.set(upgrade_rarity(item, current_slot_spec()))
+
+
+@render.ui
+def item_display():
+    item = current_item()
+    if item is None:
+        return ui.p("Click 'Generate random item' to create one.")
+
+    lines = [
+        ui.div(f"Slot: {item['slot']}"),
+        ui.div("Rarity: ", ui.span(item["rarity"], class_=f"rarity-{item['rarity']}")),
+        ui.div(f"Special: {', '.join(item['special']) if item['special'] else 'None'}"),
+    ]
+
+    stat_keys = sorted(k for k in item if k.startswith("Turquoise stat"))
+    for key in stat_keys:
+        stat_type, mechanism = item[key]
+        lines.append(ui.div(f"{key}: {stat_type}  -  {mechanism}"))
+
+    lines.append(ui.div(icon_svg("layer-group"), " Slots:"))
+
+    slot_keys = sorted((k for k in item if k.startswith("slot_")), key=lambda k: int(k.split("_")[1]))
+    for key in slot_keys:
+        value = item[key]
+        if value[0] is None:
+            lines.append(ui.div(icon_svg("lock"), "Blocked", class_="slot-line blocked"))
+        else:
+            type_, choice, mechanism = value
+            lines.append(ui.div(icon_svg("gem"), f"{type_}({choice})  -  {mechanism}", class_="slot-line"))
+
+    return ui.div(*lines, class_="item-card")
+
+```
+
+:::

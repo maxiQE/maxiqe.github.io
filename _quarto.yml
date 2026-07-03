@@ -9,8 +9,7 @@ website:
     back-to-top-navigation: true
     navbar:
         left:
-            - standalone/optimal_gem_setups.qmd
-            - standalone/elarion_damage_comparison.qmd
+            - standalone/gear_crafter.qmd
 
 execute:
     freeze: auto
