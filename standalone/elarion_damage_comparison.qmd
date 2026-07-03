@@ -5,6 +5,7 @@ filters:
   - shinylive
 ---
 
+Obsolete! This was only valid for s2
 
 :::{.column-screen-inset}
 
