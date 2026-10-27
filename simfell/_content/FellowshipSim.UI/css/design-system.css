@@ -1,0 +1,135 @@
+/* Rules several components share, as classes. Colours and fonts are custom properties in app.css, with a dark value for
+   each colour. A component puts the class on its element: <div class="row">. */
+
+/* Controls on one line that wrap. Text inputs have the width the other controls leave. */
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.row input {
+  flex: 1 1 260px;
+}
+
+/* Muted text about the controls below it. */
+.hint {
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+/* Muted small text beside a name: a report code, a duration. */
+.meta {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* A button of lesser weight than the accent button next to it. */
+.secondary-button {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.secondary-button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+/* A button with one icon. */
+.icon-button {
+  display: inline-flex;
+  padding: 5px 7px;
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--border);
+}
+
+/* An icon button that removes something: red on hover. */
+.danger-button:hover:not(:disabled) {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+
+/* A line under a field: its error or its warning. */
+.field-error,
+.field-warning {
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.field-error {
+  color: var(--bad);
+}
+
+.field-warning {
+  color: var(--warn);
+}
+
+/* A button that reads as a link: it shows a page, a job or a review inside the app. */
+.link-button {
+  display: inline;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+/* A checkbox drawn as a switch, before the card's title. */
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.switch input {
+  appearance: none;
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--border);
+  cursor: pointer;
+}
+
+.switch input::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: left 0.15s;
+}
+
+.switch input:checked {
+  background: var(--accent);
+}
+
+.switch input:checked::after {
+  left: 18px;
+  background: var(--bg);
+}
+
+.switch-title {
+  margin: 0;
+  color: var(--heading);
+  font-family: var(--heading-font);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

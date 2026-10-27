@@ -1,0 +1,56 @@
+/*
+  A review page shown in the app (reviewView.js): the review generator's stylesheet with the app's colours and fonts.
+  The page's own stylesheet stays in the file for when it is saved and opened on its own.
+*/
+:host {
+  display: block;
+  --panel: var(--surface);
+  --line: var(--border);
+  --ok: var(--good);
+  --ok-bg: rgba(95, 214, 154, 0.08);
+  --bad-bg: rgba(248, 113, 145, 0.1);
+  --warn-bg: rgba(245, 165, 36, 0.1);
+  --engine: var(--heading);
+  --log: #8ea2ff;
+}
+
+* { box-sizing: border-box; }
+
+.review { color: var(--text); font-size: 14px; line-height: 1.45; }
+main { padding: 8px 0 48px; }
+h1, h2 { font-family: var(--heading-font); color: var(--heading); letter-spacing: 0.04em; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+h2 { font-size: 16px; margin: 28px 0 10px; }
+.muted { color: var(--muted); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+.halt { border-color: var(--bad); background: var(--bad-bg); }
+.done { border-color: var(--ok); background: var(--ok-bg); }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 999px; background: var(--line); margin-right: 6px; }
+.tag.bad { background: var(--bad); color: var(--accent-text); }
+.ok { color: var(--ok); }
+.bad { color: var(--bad); }
+.warn { color: var(--warn); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-size: 12px; color: var(--muted); font-weight: 600; }
+td.num, th.num { text-align: right; }
+tr.fail td { background: var(--bad-bg); }
+tr.skip td { color: var(--muted); }
+details { margin: 8px 0; }
+summary { cursor: pointer; font-weight: 600; }
+ul { margin: 6px 0; padding-left: 20px; }
+code { font-size: 12px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.chart { width: 100%; height: auto; display: block; }
+.chart text { fill: var(--muted); font-size: 11px; }
+.chart .axis { stroke: var(--line); }
+.legend { display: flex; gap: 16px; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.legend i { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 6px; }
+td.diff-bad { color: var(--bad); }
+td.diff-ok { color: var(--ok); }
+tr.total td { font-weight: 600; border-top: 2px solid var(--line); }
+.fightnav { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.fightnav a { font-size: 12px; padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--text); text-decoration: none; background: var(--panel); }
+.fightnav a.cur { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+a { color: var(--heading); }

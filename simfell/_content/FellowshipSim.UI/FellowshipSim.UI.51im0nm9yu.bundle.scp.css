@@ -1,0 +1,3555 @@
+/* _content/FellowshipSim.UI/Apl/ActionDetail.razor.rz.scp.css */
+.detail[b-8azl0d9f8d] {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 10px 14px;
+  align-items: start;
+  padding: 10px 14px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.detail > label[b-8azl0d9f8d] {
+  padding-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.detail[b-8azl0d9f8d]  select {
+  justify-self: start;
+  max-width: 100%;
+}
+
+.detail .comment[b-8azl0d9f8d] {
+  width: 100%;
+  resize: vertical;
+}
+
+.detail .arguments[b-8azl0d9f8d] {
+  width: 100%;
+  font: 13px/1.5 var(--code-font);
+}
+
+.list-hint[b-8azl0d9f8d] {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .detail[b-8azl0d9f8d] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+}
+/* _content/FellowshipSim.UI/Apl/ActionItem.razor.rz.scp.css */
+.action[b-m5feontnu6] {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.action.open[b-m5feontnu6] {
+  border-color: var(--accent);
+}
+
+.action.dragging[b-m5feontnu6] {
+  opacity: 0.5;
+}
+
+.action.drop-before[b-m5feontnu6] {
+  box-shadow: 0 -3px 0 var(--accent);
+}
+
+.action.drop-after[b-m5feontnu6] {
+  box-shadow: 0 3px 0 var(--accent);
+}
+
+.head[b-m5feontnu6] {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.head:hover[b-m5feontnu6] {
+  background: var(--row-hover);
+}
+
+.grip[b-m5feontnu6] {
+  cursor: grab;
+  color: var(--muted);
+  padding: 2px;
+  user-select: none;
+}
+
+.toggle[b-m5feontnu6] {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  padding: 4px;
+  text-align: left;
+}
+
+.toggle[b-m5feontnu6]  .chevron {
+  color: var(--muted);
+  transition: transform 0.15s;
+}
+
+.action.open .toggle[b-m5feontnu6]  .chevron {
+  transform: rotate(90deg);
+  color: var(--accent);
+}
+
+.number[b-m5feontnu6] {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 1.5em;
+  text-align: right;
+}
+
+.ability[b-m5feontnu6] {
+  font-weight: 600;
+}
+
+.move:hover:not(:disabled)[b-m5feontnu6] {
+  color: var(--text);
+}
+/* _content/FellowshipSim.UI/Apl/ActionListsCard.razor.rz.scp.css */
+.toolbar[b-lhpkivmt32] {
+  align-items: center;
+}
+
+.toolbar input[b-lhpkivmt32] {
+  flex: 1 1 200px;
+}
+
+.toolbar button[b-lhpkivmt32] {
+  min-height: 40px;
+}
+
+.confirm[b-lhpkivmt32] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--warn);
+  border-radius: 6px;
+}
+
+.confirm span[b-lhpkivmt32] {
+  flex: 1 1 260px;
+}
+
+.delete[b-lhpkivmt32] {
+  color: var(--bad);
+}
+
+.field[b-lhpkivmt32] {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.add-list[b-lhpkivmt32] {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.add-list input[b-lhpkivmt32] {
+  flex: 0 1 280px;
+}
+
+.text[b-lhpkivmt32] {
+  margin-top: 14px;
+}
+
+.text summary[b-lhpkivmt32] {
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.text textarea[b-lhpkivmt32] {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  font: 13px/1.5 var(--code-font);
+  resize: vertical;
+}
+/* _content/FellowshipSim.UI/Apl/ActionSummary.razor.rz.scp.css */
+.summary[b-wdp8ritxg7] {
+  padding: 0 12px 8px 78px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary:empty[b-wdp8ritxg7] {
+  display: none;
+}
+
+.clause[b-wdp8ritxg7] {
+  font-family: var(--code-font);
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.keyword[b-wdp8ritxg7] {
+  color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .summary[b-wdp8ritxg7] {
+    padding-left: 12px;
+  }
+}
+/* _content/FellowshipSim.UI/Apl/CodeField.razor.rz.scp.css */
+.code-field[b-8a8k6whwm9] {
+  position: relative;
+  width: 100%;
+}
+
+.code-field pre[b-8a8k6whwm9],
+.code-field textarea[b-8a8k6whwm9] {
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font: 13px/1.5 var(--code-font);
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.code-field pre[b-8a8k6whwm9] {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--text);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.code-field textarea[b-8a8k6whwm9] {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 2.4em;
+  resize: none;
+  overflow: hidden;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--text);
+}
+
+.code-field textarea[b-8a8k6whwm9]::placeholder {
+  color: var(--muted);
+}
+
+.code-field.invalid textarea[b-8a8k6whwm9] {
+  border-color: var(--bad);
+}
+
+/* Until the highlight layer has the text just typed, the textarea shows its own text. */
+.code-field[data-stale] textarea[b-8a8k6whwm9] {
+  color: var(--text);
+}
+
+.code-field[data-stale] .highlight[b-8a8k6whwm9] {
+  color: transparent;
+}
+
+.code-field[data-stale] .highlight[b-8a8k6whwm9]  * {
+  color: transparent;
+  background: none;
+  text-decoration: none;
+}
+
+.completions[b-8a8k6whwm9] {
+  position: absolute;
+  z-index: 10;
+  width: max-content;
+  min-width: 200px;
+  max-width: min(420px, 100%);
+  max-height: 240px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.25);
+  font: 13px/1.5 var(--code-font);
+}
+
+.completions li[b-8a8k6whwm9] {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.completions li:hover[b-8a8k6whwm9] {
+  background: var(--row-hover);
+}
+
+.completions li.selected[b-8a8k6whwm9] {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.completion-detail[b-8a8k6whwm9] {
+  color: var(--muted);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* _content/FellowshipSim.UI/Apl/ConditionField.razor.rz.scp.css */
+.condition[b-1s15hpb2rl] {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.segmented[b-1s15hpb2rl] {
+  display: inline-flex;
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.segmented button[b-1s15hpb2rl] {
+  padding: 3px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.segmented button[aria-pressed="true"][b-1s15hpb2rl] {
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.builder[b-1s15hpb2rl] {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.builder[hidden][b-1s15hpb2rl] {
+  display: none;
+}
+
+.fields[b-1s15hpb2rl] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 2px 0;
+}
+
+.condition-row[b-1s15hpb2rl] {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 4px;
+  border-radius: 6px;
+}
+
+.condition-row select[b-1s15hpb2rl],
+.condition-row input[b-1s15hpb2rl] {
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+/* A join (62px), the gap, and a 'not' (44px): '(' and ')' start after it, and so does a group's rail. */
+.lead[b-1s15hpb2rl] {
+  width: 112px;
+  flex: none;
+}
+
+.rail[b-1s15hpb2rl] {
+  position: relative;
+  align-self: stretch;
+  width: 14px;
+  flex: none;
+}
+
+.rail[b-1s15hpb2rl]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 6px;
+  border-left: 2px solid var(--border);
+}
+
+.if[b-1s15hpb2rl] {
+  width: 62px;
+  flex: none;
+  text-align: center;
+  color: var(--accent);
+  font: 13px var(--code-font);
+}
+
+.join[b-1s15hpb2rl] {
+  width: 62px;
+  color: var(--tok-operator);
+  font-family: var(--code-font);
+}
+
+.not[b-1s15hpb2rl] {
+  width: 44px;
+  padding: 4px 0;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font: 13px var(--code-font);
+}
+
+.not[aria-pressed="true"][b-1s15hpb2rl] {
+  border-color: var(--tok-operator);
+  color: var(--tok-operator);
+  background: color-mix(in srgb, var(--tok-operator) 16%, transparent);
+}
+
+.kind[b-1s15hpb2rl] {
+  width: 130px;
+}
+
+.name[b-1s15hpb2rl] {
+  width: 190px;
+}
+
+.property[b-1s15hpb2rl] {
+  width: 120px;
+}
+
+.comparison[b-1s15hpb2rl] {
+  width: 58px;
+  color: var(--tok-operator);
+  font-family: var(--code-font);
+}
+
+.remove[b-1s15hpb2rl] {
+  margin-left: auto;
+  border-color: transparent;
+}
+
+.paren[b-1s15hpb2rl] {
+  width: 14px;
+  flex: none;
+  text-align: center;
+  color: var(--text);
+  font: 600 16px var(--code-font);
+}
+
+.placeholder .kind[b-1s15hpb2rl] {
+  border-style: dashed;
+}
+/* _content/FellowshipSim.UI/Apl/Icon.razor.rz.scp.css */
+.icon[b-jk57efa3lm] {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  display: block;
+}
+/* _content/FellowshipSim.UI/Apl/ListName.razor.rz.scp.css */
+.name[b-k2i03h514k] {
+  flex: 0 1 240px;
+  min-width: 0;
+  font-family: var(--code-font);
+}
+/* _content/FellowshipSim.UI/Apl/ListSection.razor.rz.scp.css */
+.list[b-c8kslgt8w9] {
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+
+/* The heading of the default list, or of ListName. */
+.list[b-c8kslgt8w9]  h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.head[b-c8kslgt8w9] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-all[b-c8kslgt8w9] {
+  margin-left: auto;
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.toggle-all:hover[b-c8kslgt8w9] {
+  text-decoration: underline;
+}
+
+.actions[b-c8kslgt8w9] {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* _content/FellowshipSim.UI/Apl/NumberField.razor.rz.scp.css */
+.value[b-ahcuisl1sv] {
+  width: 72px;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: var(--tok-number);
+  font-family: var(--code-font);
+}
+/* _content/FellowshipSim.UI/Apl/TokenText.razor.rz.scp.css */
+/* The colour of each token kind in an expression. Each class name is an AplTokenKind value in lower case. */
+
+.operator[b-2tskb06fsg] {
+  color: var(--tok-operator);
+}
+.number[b-2tskb06fsg] {
+  color: var(--tok-number);
+}
+.named[b-2tskb06fsg] {
+  color: var(--tok-named);
+}
+.resource[b-2tskb06fsg] {
+  color: var(--tok-resource);
+}
+.buff[b-2tskb06fsg] {
+  color: var(--tok-buff);
+}
+.debuff[b-2tskb06fsg] {
+  color: var(--tok-debuff);
+}
+.cooldown[b-2tskb06fsg] {
+  color: var(--tok-cooldown);
+}
+.unknown[b-2tskb06fsg] {
+  color: var(--tok-unknown);
+  text-decoration: underline wavy;
+  text-underline-offset: 3px;
+}
+
+/* The part of the text at a parse error. */
+.error[b-2tskb06fsg] {
+  background: color-mix(in srgb, var(--bad) 25%, transparent);
+}
+/* _content/FellowshipSim.UI/Build/GameIcon.razor.rz.scp.css */
+.icon[b-7tapooa3i4] {
+  flex: none;
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+.empty[b-7tapooa3i4] {
+  display: inline-block;
+  border: 1px dashed var(--border);
+}
+/* _content/FellowshipSim.UI/Build/HeroEditor.razor.rz.scp.css */
+.toolbar input[b-1mhqfc0l60] {
+  flex: 1 1 220px;
+}
+
+.toolbar button[b-1mhqfc0l60] {
+  min-height: 40px;
+}
+
+.delete[b-1mhqfc0l60] {
+  color: var(--bad);
+}
+
+/* Hero and stats beside the talents, which take two of the three columns. */
+/* The hero and its character sheet in a sidebar pinned below the Sim tabs; everything else scrolls beside it. */
+.editor[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  margin: 16px 0;
+}
+
+.sidebar[b-1mhqfc0l60] {
+  position: sticky;
+  /* Below the Sim page's pinned tab bar. */
+  top: 72px;
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
+}
+
+.sidebar[b-1mhqfc0l60]  .card {
+  margin: 0;
+  border-color: var(--accent);
+}
+
+.editor-main[b-1mhqfc0l60] {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.editor-main[b-1mhqfc0l60]  .card,
+.editor-main .pair[b-1mhqfc0l60] {
+  margin: 0;
+}
+
+/* The character sheet: each stat and its percentage. */
+.sheet[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+}
+
+.sheet > *[b-1mhqfc0l60] {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.sheet > :nth-last-child(-n + 2)[b-1mhqfc0l60] {
+  border-bottom: none;
+}
+
+.sheet-label[b-1mhqfc0l60] {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.sheet strong[b-1mhqfc0l60] {
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.sheet .percent[b-1mhqfc0l60] {
+  color: var(--heading);
+}
+
+/* The ratings typed in: a label and its number on one line. */
+.ratings[b-1mhqfc0l60] {
+  display: grid;
+  gap: 6px;
+}
+
+.ratings label[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* A number typed in, without the browser's up and down arrows. */
+.ratings input[b-1mhqfc0l60] {
+  width: 96px;
+  text-align: right;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+/* Primary and Secondary, with the Gear and Total column names over the first group, right-aligned as the numbers. */
+.ratings .stat-group[b-1mhqfc0l60] {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--heading);
+}
+
+.ratings .stat-group:first-child[b-1mhqfc0l60] {
+  margin-top: 0;
+}
+
+.ratings .stat-group .column[b-1mhqfc0l60],
+.ratings .stat-group .total[b-1mhqfc0l60] {
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+/* The input's 10px padding and 1px border, so the name ends where its numbers do. */
+.ratings .stat-group .column[b-1mhqfc0l60] {
+  box-sizing: border-box;
+  width: 96px;
+  padding-right: 11px;
+  text-align: right;
+}
+
+/* A stat as the gear gives it, and its total to its right. */
+.ratings .rating[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ratings .total[b-1mhqfc0l60] {
+  width: 48px;
+  text-align: right;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+}
+
+.ratings input[b-1mhqfc0l60]::-webkit-outer-spin-button,
+.ratings input[b-1mhqfc0l60]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.gem-totals[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 12px;
+}
+
+.gem-total[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.gem-total strong[b-1mhqfc0l60] {
+  margin-left: auto;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.gem-total.taken[b-1mhqfc0l60],
+.gem-total.taken strong[b-1mhqfc0l60] {
+  color: var(--text);
+}
+
+@media (max-width: 1000px) {
+  .editor[b-1mhqfc0l60] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar[b-1mhqfc0l60] {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* Traits beside blessings. */
+.pair[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+  /* Each card is as tall as its content: no empty space under the shorter one. */
+  align-items: start;
+}
+
+/* Stat enchants beside gems: one height, the cards filling it. */
+.pair.even[b-1mhqfc0l60] {
+  align-items: stretch;
+}
+
+.pair.even[b-1mhqfc0l60]  .card {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.hero-select[b-1mhqfc0l60] {
+  position: relative;
+}
+
+.hero-current[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px 8px 8px;
+  background: var(--input);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-align: left;
+}
+
+.hero-current:hover[b-1mhqfc0l60],
+.hero-current.open[b-1mhqfc0l60] {
+  border-color: var(--accent);
+}
+
+.hero-current img[b-1mhqfc0l60] {
+  width: 52px;
+  height: 52px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hero-name[b-1mhqfc0l60] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-name strong[b-1mhqfc0l60] {
+  font-size: 17px;
+}
+
+.chevron[b-1mhqfc0l60],
+.check[b-1mhqfc0l60] {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chevron[b-1mhqfc0l60] {
+  stroke: var(--muted);
+}
+
+.check[b-1mhqfc0l60] {
+  stroke: var(--heading);
+}
+
+/* Covers the page so a click outside the menu closes it. */
+.hero-backdrop[b-1mhqfc0l60] {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+}
+
+.hero-menu[b-1mhqfc0l60] {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 21;
+  max-height: 440px;
+  overflow-y: auto;
+  padding: 6px;
+  background: var(--header);
+  border: 1px solid #3f3f46;
+  border-radius: 10px;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 0.6);
+}
+
+.group[b-1mhqfc0l60] {
+  display: block;
+  padding: 8px 10px 4px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-option[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.hero-option[b-1mhqfc0l60]  .icon {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hero-option:hover:not(:disabled)[b-1mhqfc0l60],
+.hero-option.picked[b-1mhqfc0l60] {
+  background: var(--selected);
+}
+
+.hero-option:disabled[b-1mhqfc0l60] {
+  opacity: 1;
+  color: #8b8b93;
+}
+
+.hero-option:disabled[b-1mhqfc0l60]  .icon {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.option-name[b-1mhqfc0l60] {
+  flex: 1;
+}
+
+.section[b-1mhqfc0l60] {
+  margin: 18px 0 10px;
+  font-family: var(--heading-font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--heading);
+}
+
+.section .meta[b-1mhqfc0l60] {
+  font-family: Inter, system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.stats[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px 12px;
+}
+
+.stats.two[b-1mhqfc0l60] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stats label[b-1mhqfc0l60] {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.stats input[b-1mhqfc0l60],
+.stats select[b-1mhqfc0l60] {
+  min-width: 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.percent[b-1mhqfc0l60] {
+  color: var(--heading);
+}
+
+.points[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: -34px 0 12px;
+}
+
+/* A count against its limit ("9 / 14"), as the cards show theirs. */
+.count[b-1mhqfc0l60] {
+  color: var(--muted);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A section heading with its count on the right. */
+.section.counted[b-1mhqfc0l60] {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.small[b-1mhqfc0l60] {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.tree[b-1mhqfc0l60] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tree-row[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: 84px repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  align-items: stretch;
+}
+
+/* "I - 2 pt" on one line, as wide as it needs. */
+.tier[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  font-family: var(--heading-font);
+  color: var(--muted);
+}
+
+.tier .meta[b-1mhqfc0l60] {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 11px;
+}
+
+.talent[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  text-align: left;
+  background: var(--input);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.talent[b-1mhqfc0l60]  .icon {
+  opacity: 0.55;
+}
+
+.talent:hover:not(:disabled)[b-1mhqfc0l60] {
+  border-color: var(--accent);
+}
+
+.talent.picked[b-1mhqfc0l60] {
+  background: var(--selected);
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.talent.picked[b-1mhqfc0l60]  .icon {
+  opacity: 1;
+}
+
+.talent:disabled[b-1mhqfc0l60] {
+  opacity: 0.4;
+}
+
+.talent .name[b-1mhqfc0l60] {
+  min-width: 0;
+}
+
+.chips[b-1mhqfc0l60] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip[b-1mhqfc0l60] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.chip:hover[b-1mhqfc0l60] {
+  border-color: var(--accent);
+}
+
+.chip.picked[b-1mhqfc0l60] {
+  background: var(--selected);
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* The four sockets: a filled one shows its gem and takes it out when clicked. */
+.sockets[b-1mhqfc0l60] {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.socket[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.socket.empty[b-1mhqfc0l60] {
+  border-style: dashed;
+}
+
+.socket.filled[b-1mhqfc0l60] {
+  border-color: var(--accent);
+  background: var(--selected);
+}
+
+.socket.filled:hover[b-1mhqfc0l60] {
+  border-color: var(--bad);
+}
+
+/* A row per colour: its gem power, its four gems (click to socket one), and its gear bonuses. */
+.gem-rows[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.gem-row[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "name bonus" "picks picks";
+  align-items: center;
+  gap: 6px 8px;
+  padding: 8px 10px;
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.gem-row.taken[b-1mhqfc0l60] {
+  border-color: var(--accent);
+}
+
+.gem-name[b-1mhqfc0l60] {
+  grid-area: name;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.gem-picks[b-1mhqfc0l60] {
+  grid-area: picks;
+  /* The four sizes share the box's width. */
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.gem-pick[b-1mhqfc0l60] {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.gem-pick:hover:not(:disabled)[b-1mhqfc0l60] {
+  border-color: var(--accent);
+}
+
+.gem-pick.picked[b-1mhqfc0l60] {
+  border-color: var(--accent);
+  background: var(--selected);
+}
+
+.gem-pick-power[b-1mhqfc0l60] {
+  color: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.gem-count[b-1mhqfc0l60] {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.gear-bonus[b-1mhqfc0l60] {
+  grid-area: bonus;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* A number typed in, without the browser's up and down arrows. */
+.gear-bonus input[b-1mhqfc0l60] {
+  width: 44px;
+  padding: 6px 8px;
+  background: var(--surface);
+  text-align: right;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.gear-bonus input[b-1mhqfc0l60]::-webkit-outer-spin-button,
+.gear-bonus input[b-1mhqfc0l60]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* Stat enchants as tiles, like Aspects and Sigils (RankedChoices): icon, name over its stats, and the rating. */
+.enchants[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 8px;
+}
+
+.enchant[b-1mhqfc0l60] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.enchant.taken[b-1mhqfc0l60] {
+  background: var(--selected);
+  border-color: var(--accent);
+}
+
+.enchant-name[b-1mhqfc0l60] {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.enchant-stats[b-1mhqfc0l60] {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.enchant.taken .enchant-stats[b-1mhqfc0l60] {
+  color: var(--heading);
+}
+
+/* A number typed in, without the browser's up and down arrows. */
+.stepper[b-1mhqfc0l60] {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.enchant input[b-1mhqfc0l60] {
+  width: 56px;
+  padding: 6px 8px;
+  background: var(--surface);
+  text-align: right;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.enchant input[b-1mhqfc0l60]::-webkit-outer-spin-button,
+.enchant input[b-1mhqfc0l60]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.badge[b-1mhqfc0l60] {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 999px;
+  border: 1px solid var(--warn);
+  color: var(--warn);
+  font-size: 10px;
+}
+
+@media (max-width: 1200px) {
+  .pair[b-1mhqfc0l60] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .tree-row[b-1mhqfc0l60] {
+    grid-template-columns: 72px repeat(3, minmax(0, 1fr));
+  }
+
+  .talent[b-1mhqfc0l60] {
+    flex-direction: column;
+    text-align: center;
+    padding: 6px;
+  }
+
+  .talent .name[b-1mhqfc0l60] {
+    font-size: 12px;
+  }
+
+  .points[b-1mhqfc0l60] {
+    margin-top: 0;
+  }
+}
+
+/* The sidebar's count of every enchant worn against the limit. */
+.slots-total[b-1mhqfc0l60] {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.slots-total strong[b-1mhqfc0l60] {
+  color: var(--text);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.slots-total.over strong[b-1mhqfc0l60] {
+  color: var(--bad);
+}
+
+/* The build's profile text from Export, with Copy and Close under it. */
+.export[b-1mhqfc0l60] {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.export textarea[b-1mhqfc0l60] {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+  resize: vertical;
+}
+
+/* A gear card's count: the armor's (or all gear's) with the room left, and the weapon's tree under it. */
+.gear-count[b-1mhqfc0l60] {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.gear-count .where[b-1mhqfc0l60] {
+  font-weight: 400;
+}
+
+.gear-count .room[b-1mhqfc0l60] {
+  color: var(--good);
+}
+
+.gear-count .full[b-1mhqfc0l60] {
+  font-weight: 400;
+}
+/* _content/FellowshipSim.UI/Build/RankedChoices.razor.rz.scp.css */
+.grid[b-8icmnmumaq] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 8px;
+}
+
+.option[b-8icmnmumaq] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.option.taken[b-8icmnmumaq] {
+  background: var(--selected);
+  border-color: var(--accent);
+}
+
+.option.taken .rank[b-8icmnmumaq] {
+  color: var(--heading);
+}
+
+.name[b-8icmnmumaq] {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.stepper[b-8icmnmumaq] {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rank[b-8icmnmumaq] {
+  min-width: 30px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.badge[b-8icmnmumaq] {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 6px;
+  border-radius: 999px;
+  border: 1px solid var(--warn);
+  color: var(--warn);
+  font-size: 11px;
+}
+/* _content/FellowshipSim.UI/Jobs/JobProgress.razor.rz.scp.css */
+.bar[b-jfen6i48fv] {
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 4px;
+  background: var(--row-hover);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.fill[b-jfen6i48fv] {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s linear;
+}
+
+.done .fill[b-jfen6i48fv] {
+  background: var(--good);
+}
+
+.failed .fill[b-jfen6i48fv] {
+  background: var(--bad);
+}
+
+.cancelled .fill[b-jfen6i48fv] {
+  background: var(--muted);
+}
+
+.meta[b-jfen6i48fv] {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.percent[b-jfen6i48fv] {
+  font-variant-numeric: tabular-nums;
+}
+/* _content/FellowshipSim.UI/Jobs/JobView.razor.rz.scp.css */
+.head[b-wsxqqlugo5] {
+  display: flex;
+  align-items: center;
+  gap: 4px 10px;
+  flex-wrap: wrap;
+  min-height: 30px;
+}
+
+.kind[b-wsxqqlugo5] {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 6px;
+}
+
+.title[b-wsxqqlugo5] {
+  flex: 1 1 240px;
+  margin: 0;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.status[b-wsxqqlugo5] {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.status.running[b-wsxqqlugo5] {
+  color: var(--accent);
+}
+
+.status.done[b-wsxqqlugo5] {
+  color: var(--good);
+}
+
+.status.failed[b-wsxqqlugo5] {
+  color: var(--bad);
+}
+
+.head button[b-wsxqqlugo5] {
+  padding: 3px 10px;
+  font-size: 13px;
+}
+/* _content/FellowshipSim.UI/Jobs/ResultNav.razor.rz.scp.css */
+.result-nav[b-q481e9dsak] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 12px;
+}
+/* _content/FellowshipSim.UI/Jobs/ResultsSidebar.razor.rz.scp.css */
+.toggle[b-y1eiyjfnwa] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+  min-height: 40px;
+  font-size: 13px;
+}
+
+.icon[b-y1eiyjfnwa] {
+  width: 16px;
+  height: 16px;
+}
+
+.count[b-y1eiyjfnwa] {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Covers the page, review iframes included, so a click outside the sidebar closes it. */
+.backdrop[b-y1eiyjfnwa] {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgb(0 0 0 / 0.25);
+}
+
+.sidebar[b-y1eiyjfnwa] {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 21;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: min(400px, 100vw);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  box-shadow: -8px 0 24px rgb(0 0 0 / 0.25);
+}
+
+.sidebar-head[b-y1eiyjfnwa] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-head h2[b-y1eiyjfnwa] {
+  margin: 0;
+  font-size: 16px;
+}
+
+.sidebar-body[b-y1eiyjfnwa] {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 0 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+h3[b-y1eiyjfnwa] {
+  margin: 12px 14px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.hint[b-y1eiyjfnwa] {
+  margin: 4px 14px;
+}
+
+.items[b-y1eiyjfnwa] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item[b-y1eiyjfnwa] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: start;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.item:last-child[b-y1eiyjfnwa] {
+  border-bottom: none;
+}
+
+.pick[b-y1eiyjfnwa] {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 6px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+}
+
+.pick:hover[b-y1eiyjfnwa] {
+  background: var(--row-hover);
+}
+
+.item-head[b-y1eiyjfnwa] {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.kind[b-y1eiyjfnwa] {
+  flex: none;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 5px;
+}
+
+.item-title[b-y1eiyjfnwa] {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.item-meta[b-y1eiyjfnwa] {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.status[b-y1eiyjfnwa] {
+  flex: none;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.status.running[b-y1eiyjfnwa] {
+  color: var(--accent);
+}
+
+.status.failed[b-y1eiyjfnwa] {
+  color: var(--bad);
+}
+
+.actions[b-y1eiyjfnwa] {
+  display: flex;
+  gap: 6px;
+  padding-top: 6px;
+}
+
+.actions button[b-y1eiyjfnwa] {
+  padding: 3px 10px;
+  font-size: 13px;
+}
+
+.actions .icon-button[b-y1eiyjfnwa] {
+  padding: 3px 8px;
+}
+/* _content/FellowshipSim.UI/Jobs/RunsResult.razor.rz.scp.css */
+/* A compare's or finder's runs: tiles, then the runs table with a change bar per run. */
+.tiles[b-gf111z7je7] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.tile[b-gf111z7je7] {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-width: 0;
+}
+
+.tile span[b-gf111z7je7] {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tile strong[b-gf111z7je7] {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tile em[b-gf111z7je7] {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card[b-gf111z7je7] {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 0;
+}
+
+.card-head[b-gf111z7je7] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.card h3[b-gf111z7je7] {
+  margin: 0;
+  color: var(--heading);
+  font-family: var(--heading-font);
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.legend[b-gf111z7je7] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.legend i[b-gf111z7je7] {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 10px;
+  border-radius: 2px;
+}
+
+.legend span[b-gf111z7je7] {
+  margin-left: 10px;
+}
+
+.scroll[b-gf111z7je7] {
+  overflow-x: auto;
+}
+
+table[b-gf111z7je7] {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+th[b-gf111z7je7] {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: right;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td[b-gf111z7je7] {
+  padding: 7px 10px;
+  border-bottom: 1px solid #1e1e22;
+  text-align: right;
+  white-space: nowrap;
+}
+
+th.l[b-gf111z7je7],
+td.l[b-gf111z7je7] {
+  text-align: left;
+}
+
+td.name .meta[b-gf111z7je7] {
+  margin-left: 6px;
+  font-size: 11px;
+}
+
+tbody tr:hover td[b-gf111z7je7] {
+  background: var(--row-hover);
+}
+
+tr.base td[b-gf111z7je7] {
+  background: var(--selected);
+}
+
+/* The change column takes the table's spare width, and its track fills it. */
+td.change[b-gf111z7je7] {
+  width: 100%;
+  min-width: 160px;
+  padding-inline: 14px;
+}
+
+.change-head[b-gf111z7je7] {
+  padding-inline: 14px;
+}
+
+.track[b-gf111z7je7] {
+  position: relative;
+  height: 16px;
+}
+
+.track i[b-gf111z7je7] {
+  position: absolute;
+  display: block;
+}
+
+.track .band[b-gf111z7je7] {
+  top: -7px;
+  bottom: -7px;
+  background: rgba(161, 161, 170, 0.08);
+}
+
+.track .zero[b-gf111z7je7] {
+  top: -7px;
+  bottom: -7px;
+  width: 1px;
+  background: #52525b;
+}
+
+tr.base .track .zero[b-gf111z7je7] {
+  background: var(--heading);
+}
+
+.track .bar[b-gf111z7je7] {
+  top: 2px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.track .whisker[b-gf111z7je7] {
+  top: 7px;
+  height: 2px;
+  background: var(--text);
+  opacity: 0.5;
+}
+
+.bar.gain[b-gf111z7je7],
+.legend i.gain[b-gf111z7je7] {
+  background: var(--heading);
+}
+
+.bar.same[b-gf111z7je7],
+.legend i.same[b-gf111z7je7] {
+  background: #52525b;
+}
+
+.bar.loss[b-gf111z7je7],
+.legend i.loss[b-gf111z7je7] {
+  background: var(--bad);
+}
+
+td.gain[b-gf111z7je7],
+.tile strong.gain[b-gf111z7je7] {
+  color: var(--heading);
+}
+
+td.loss[b-gf111z7je7],
+.tile strong.loss[b-gf111z7je7] {
+  color: var(--bad);
+}
+
+td.same[b-gf111z7je7] {
+  color: var(--muted);
+}
+
+.hero[b-gf111z7je7],
+.tag[b-gf111z7je7] {
+  margin-left: 8px;
+  padding: 1px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 11px;
+}
+
+.tag[b-gf111z7je7] {
+  border-color: var(--accent);
+  color: var(--heading);
+}
+
+.buttons[b-gf111z7je7] {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.buttons button[b-gf111z7je7] {
+  min-height: 0;
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.buttons .load[b-gf111z7je7] {
+  border-color: var(--accent);
+  color: var(--heading);
+}
+
+.report-head[b-gf111z7je7] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-top: 12px;
+}
+
+/* A figure with a smaller line under it: DPS and the main target's, or the change in percent and in DPS. */
+td.two strong[b-gf111z7je7] {
+  display: block;
+  font-size: 14px;
+}
+
+td.two span[b-gf111z7je7] {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.verdict[b-gf111z7je7] {
+  display: inline-block;
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.verdict.gain[b-gf111z7je7] {
+  border-color: var(--accent);
+  background: var(--selected);
+}
+
+.verdict.loss[b-gf111z7je7] {
+  border-color: rgb(248 113 145 / 0.5);
+}
+/* _content/FellowshipSim.UI/Jobs/SavedSimView.razor.rz.scp.css */
+.head[b-topbegzcit] {
+  display: flex;
+  align-items: center;
+  gap: 4px 10px;
+  flex-wrap: wrap;
+  min-height: 30px;
+}
+
+.kind[b-topbegzcit] {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 6px;
+}
+
+.title[b-topbegzcit] {
+  flex: 1 1 240px;
+  margin: 0;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+/* _content/FellowshipSim.UI/Jobs/SimJobResult.razor.rz.scp.css */
+/* A sim's report: tiles, two charts over the fight, then the damage and buff tables. */
+.report[b-by7dneuuu6] {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.tiles[b-by7dneuuu6] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.tile[b-by7dneuuu6] {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-width: 0;
+}
+
+.tile.main[b-by7dneuuu6] {
+  border-color: var(--accent);
+}
+
+.tile span[b-by7dneuuu6] {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tile strong[b-by7dneuuu6] {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tile.main strong[b-by7dneuuu6] {
+  color: var(--heading);
+}
+
+.tile em[b-by7dneuuu6] {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.card[b-by7dneuuu6] {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 0;
+}
+
+.card h3[b-by7dneuuu6] {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--heading);
+}
+
+.card h3 .meta[b-by7dneuuu6] {
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
+.card-head[b-by7dneuuu6] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.legend[b-by7dneuuu6] {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.legend i[b-by7dneuuu6] {
+  display: inline-block;
+  width: 16px;
+  margin-left: 10px;
+}
+
+.legend i.mean[b-by7dneuuu6] {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--heading);
+}
+
+.legend i.band[b-by7dneuuu6] {
+  height: 10px;
+  border-radius: 2px;
+  background: rgba(212, 175, 110, 0.18);
+}
+
+.legend i.spirit-mean[b-by7dneuuu6] {
+  height: 2px;
+  border-radius: 1px;
+  background: #8ea2ff;
+}
+
+.legend i.average[b-by7dneuuu6] {
+  border-top: 1px dashed #8ea2ff;
+}
+
+/* A chart: the value axis left, the drawing, the time axis under it. */
+.chart[b-by7dneuuu6] {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-rows: 240px auto;
+  column-gap: 8px;
+}
+
+.chart .y[b-by7dneuuu6] {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.chart .x[b-by7dneuuu6] {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.chart .y span[b-by7dneuuu6],
+.chart .x span[b-by7dneuuu6] {
+  color: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.chart svg[b-by7dneuuu6] {
+  width: 100%;
+  height: 240px;
+  display: block;
+  border-bottom: 1px solid var(--border);
+}
+
+.chart .grid[b-by7dneuuu6] {
+  stroke: #1e1e22;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart .band[b-by7dneuuu6] {
+  fill: rgba(212, 175, 110, 0.18);
+  stroke: none;
+}
+
+.chart .mean[b-by7dneuuu6] {
+  fill: none;
+  stroke: var(--heading);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart .spirit-mean[b-by7dneuuu6] {
+  fill: none;
+  stroke: #8ea2ff;
+  stroke-width: 1.5;
+  opacity: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart .average[b-by7dneuuu6] {
+  stroke: #8ea2ff;
+  stroke-width: 1;
+  stroke-dasharray: 6 6;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The report's tables: small capital headings, quiet rows, figures right-aligned, the name with its icon on the left. */
+.report-table[b-by7dneuuu6] {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-table th[b-by7dneuuu6] {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: right;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.report-table td[b-by7dneuuu6] {
+  padding: 7px 10px;
+  border-bottom: 1px solid #1e1e22;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.report-table th:first-child[b-by7dneuuu6],
+.report-table td.name[b-by7dneuuu6] {
+  text-align: left;
+}
+
+.report-table td.name[b-by7dneuuu6] {
+  color: var(--text);
+}
+
+/* The icon sits inline before the name, so the cell stays a table cell. */
+.report-table td.name[b-by7dneuuu6]  .icon {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.report-table td.name .meta[b-by7dneuuu6] {
+  margin-left: 6px;
+  font-size: 11px;
+}
+
+.report-table tbody tr:hover td[b-by7dneuuu6] {
+  background: var(--row-hover);
+}
+
+.report-table .total td[b-by7dneuuu6] {
+  border-top: 2px solid var(--border);
+  border-bottom: none;
+  font-weight: 700;
+}
+
+/* An ability's amount as FellowshipLogs shows it, on one line: its share, a bar, then its damage. The column takes the
+   table's spare width and the bar fills it. */
+.report-table .amount-cell[b-by7dneuuu6] {
+  width: 100%;
+}
+
+.amount[b-by7dneuuu6] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.amount .pct[b-by7dneuuu6] {
+  min-width: 44px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.amount .bar[b-by7dneuuu6] {
+  flex: 1;
+  min-width: 80px;
+  width: auto;
+}
+
+.amount .value[b-by7dneuuu6] {
+  min-width: 80px;
+  text-align: right;
+}
+
+/* A buff's timeline: thin bars where it was up, across the column. It has no width of its own (its 1000-wide view box
+   would otherwise make it 1000px wide and the table with it): it takes what the column leaves. The bars take its colour. */
+.amount .spans[b-by7dneuuu6] {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 120px;
+  height: 8px;
+  display: block;
+  color: var(--heading);
+}
+
+.share[b-by7dneuuu6] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* A buff's uptime: the share itself, at full size. */
+.report-table td > .share:only-child[b-by7dneuuu6] {
+  color: var(--text);
+  font-size: 13px;
+  gap: 8px;
+}
+
+.bar[b-by7dneuuu6] {
+  width: 80px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.bar b[b-by7dneuuu6] {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.hint[b-by7dneuuu6] {
+  margin: 0;
+}
+
+/* The cast sequence: a row per 30 seconds, its start time, then each cast's icon with its time under it. */
+.casts[b-by7dneuuu6] {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cast-row[b-by7dneuuu6] {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #1e1e22;
+}
+
+.cast-time[b-by7dneuuu6] {
+  padding-top: 7px;
+  color: var(--heading);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cast-list[b-by7dneuuu6] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cast-list li[b-by7dneuuu6] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 36px;
+}
+
+.cast-list[b-by7dneuuu6]  .icon {
+  border-radius: 5px;
+  border: 1px solid var(--border);
+}
+
+.cast-list span[b-by7dneuuu6] {
+  color: var(--muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+/* _content/FellowshipSim.UI/Layout/ApiStatus.razor.rz.scp.css */
+.status[b-atx7sdttch] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dot[b-atx7sdttch] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.connected[b-atx7sdttch] {
+  color: var(--good);
+  border-color: color-mix(in srgb, var(--good) 35%, transparent);
+}
+
+.missing[b-atx7sdttch] {
+  color: var(--warn);
+  border-color: color-mix(in srgb, var(--warn) 35%, transparent);
+}
+/* _content/FellowshipSim.UI/Layout/MainLayout.razor.rz.scp.css */
+.top[b-vkspvgdwqn] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 32px;
+  padding: 14px 32px;
+  background: var(--header);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand[b-vkspvgdwqn] {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.name[b-vkspvgdwqn] {
+  font-family: var(--heading-font);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+
+.white[b-vkspvgdwqn] {
+  color: #fff;
+}
+
+.gold[b-vkspvgdwqn] {
+  color: var(--heading);
+}
+
+.tagline[b-vkspvgdwqn] {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.nav[b-vkspvgdwqn] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav[b-vkspvgdwqn]  a {
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav[b-vkspvgdwqn]  a:hover {
+  color: var(--text);
+}
+
+.nav[b-vkspvgdwqn]  a.active {
+  background: var(--row-hover);
+  border-color: var(--accent);
+  color: var(--heading);
+}
+
+.actions[b-vkspvgdwqn] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.main[b-vkspvgdwqn] {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 48px;
+}
+
+@media (max-width: 600px) {
+  .top[b-vkspvgdwqn] {
+    padding: 12px 16px;
+  }
+
+  .main[b-vkspvgdwqn] {
+    padding: 0 16px 40px;
+  }
+}
+/* _content/FellowshipSim.UI/Layout/UpdateBanner.razor.rz.scp.css */
+.update[b-vtuhgok8sw] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 16px;
+  padding: 8px max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px));
+  background: var(--selected);
+  border-bottom: 1px solid var(--accent);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.update a[b-vtuhgok8sw] {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.dismiss[b-vtuhgok8sw] {
+  min-height: 0;
+  padding: 0 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+}
+
+.dismiss:hover[b-vtuhgok8sw] {
+  color: var(--text);
+}
+/* _content/FellowshipSim.UI/Pages/CompareCard.razor.rz.scp.css */
+.head[b-2ypeixwoiw] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+/* Greyed out and not clickable while the other mode, or none, is on. */
+.body.off[b-2ypeixwoiw] {
+  opacity: 0.45;
+}
+
+.hint[b-2ypeixwoiw] {
+  margin: 14px 0 0;
+  font-size: 13px;
+}
+
+.rows[b-2ypeixwoiw] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-row[b-2ypeixwoiw] {
+  display: grid;
+  grid-template-columns: 24px 64px minmax(0, 1fr) minmax(0, 1fr) 110px;
+  align-items: center;
+  gap: 10px;
+}
+
+.num[b-2ypeixwoiw] {
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.compare-row select[b-2ypeixwoiw] {
+  width: 100%;
+  min-width: 0;
+}
+
+.hero[b-2ypeixwoiw] {
+  justify-self: start;
+  padding: 2px 8px;
+  border: 1px solid #2c4766;
+  border-radius: 999px;
+  background: #0e1724;
+  color: #8fc1ff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.end[b-2ypeixwoiw] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.tag[b-2ypeixwoiw] {
+  padding: 2px 8px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--heading);
+  font-size: 11px;
+}
+
+.remove[b-2ypeixwoiw] {
+  min-height: 0;
+  padding: 2px 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+}
+
+.remove:hover[b-2ypeixwoiw] {
+  color: var(--bad);
+}
+
+.adds[b-2ypeixwoiw] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.add[b-2ypeixwoiw],
+.clear[b-2ypeixwoiw] {
+  min-height: 0;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.add[b-2ypeixwoiw] {
+  border: 1px dashed #3a3a40;
+  color: var(--heading);
+}
+
+.add:hover:not(:disabled)[b-2ypeixwoiw] {
+  border-color: var(--accent);
+}
+
+.clear[b-2ypeixwoiw] {
+  border: 1px solid #3a3a40;
+  color: var(--bad);
+}
+
+.count[b-2ypeixwoiw] {
+  margin-left: auto;
+}
+
+@media (max-width: 720px) {
+  .compare-row[b-2ypeixwoiw] {
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+  }
+
+  .compare-row select[b-2ypeixwoiw] {
+    grid-column: 2 / -1;
+  }
+}
+/* _content/FellowshipSim.UI/Pages/FinderCard.razor.rz.scp.css */
+.head[b-8gkrdmiw16] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+/* Greyed out and not clickable while the other mode, or none, is on. */
+.body.off[b-8gkrdmiw16] {
+  opacity: 0.45;
+}
+
+.hint[b-8gkrdmiw16] {
+  margin: 14px 0 0;
+  font-size: 13px;
+}
+
+.finders[b-8gkrdmiw16] {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.finder[b-8gkrdmiw16] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--input);
+  color: var(--text);
+  cursor: pointer;
+  min-width: 0;
+}
+
+.finder input[b-8gkrdmiw16] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.finder strong[b-8gkrdmiw16] {
+  font-size: 14px;
+}
+
+.finder.on[b-8gkrdmiw16] {
+  border-color: var(--accent);
+  background: var(--selected);
+}
+
+.pick[b-8gkrdmiw16] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pick button[b-8gkrdmiw16] {
+  min-height: 0;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.pick button.on[b-8gkrdmiw16] {
+  border-color: var(--accent);
+  background: var(--selected);
+  color: var(--text);
+}
+
+.runs[b-8gkrdmiw16] {
+  margin-top: auto;
+  color: var(--heading);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .finders[b-8gkrdmiw16] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .finders[b-8gkrdmiw16] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* _content/FellowshipSim.UI/Pages/LogReplay.razor.rz.scp.css */
+/* Full width under the top bar, its tabs in line with the page. */
+.subtabs[b-jigmerilj8] {
+  display: flex;
+  flex-wrap: wrap;
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+  background: var(--bar);
+  border-bottom: 1px solid var(--border);
+}
+
+.subtab[b-jigmerilj8] {
+  padding: 16px 18px;
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.subtab:hover[b-jigmerilj8] {
+  color: var(--text);
+}
+
+.subtab.selected[b-jigmerilj8] {
+  color: var(--heading);
+  border-bottom-color: var(--heading);
+}
+
+/* _content/FellowshipSim.UI/Pages/ModesTab.razor.rz.scp.css */
+/* The fight's two kinds side by side, the picked one gold. */
+.choices[b-5e114h2yxs] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.choice[b-5e114h2yxs] {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--input);
+  cursor: pointer;
+}
+
+.choice input[b-5e114h2yxs] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.choice strong[b-5e114h2yxs] {
+  font-size: 15px;
+}
+
+.choice.on[b-5e114h2yxs] {
+  border-color: var(--accent);
+  background: var(--selected);
+}
+
+.fields[b-5e114h2yxs] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 24px 40px;
+  margin-top: 14px;
+}
+
+.field[b-5e114h2yxs] {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.field input[b-5e114h2yxs] {
+  width: 120px;
+  height: 36px;
+  font-size: 14px;
+  text-align: right;
+  /* Typed in, no spin arrows. */
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.field input[b-5e114h2yxs]::-webkit-outer-spin-button,
+.field input[b-5e114h2yxs]::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.field input.short[b-5e114h2yxs] {
+  width: 90px;
+}
+
+.toggle-block[b-5e114h2yxs] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toggle-block .switch span[b-5e114h2yxs] {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.hint[b-5e114h2yxs] {
+  margin: 14px 0 0;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .choices[b-5e114h2yxs] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* _content/FellowshipSim.UI/Pages/Sim.razor.rz.scp.css */
+/* Full width under the top bar, its steps in line with the page; it stays in view while the page scrolls. */
+.steps[b-zqamy3v6wi] {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 12px;
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+  background: var(--bar);
+  border-bottom: 1px solid var(--border);
+}
+
+.tabs[b-zqamy3v6wi] {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tab[b-zqamy3v6wi] {
+  padding: 16px 18px;
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tab:hover[b-zqamy3v6wi] {
+  color: var(--text);
+}
+
+.tab.selected[b-zqamy3v6wi] {
+  color: var(--heading);
+  border-bottom-color: var(--heading);
+}
+
+.run[b-zqamy3v6wi] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 8px 0;
+}
+
+.summary[b-zqamy3v6wi] {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.run-button[b-zqamy3v6wi] {
+  min-height: 40px;
+  padding: 10px 22px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+[b-zqamy3v6wi] .file {
+  max-width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.profile[b-zqamy3v6wi] {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  font-family: var(--code-font);
+  font-size: 13px;
+  resize: vertical;
+}
+
+.preview[b-zqamy3v6wi] {
+  max-height: 420px;
+  overflow: auto;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  white-space: pre;
+}
+
+.actions[b-zqamy3v6wi] {
+  margin-top: 10px;
+}
+
+.section[b-zqamy3v6wi] {
+  margin: 20px 0 0;
+  font-size: 16px;
+}
+
+.modes[b-zqamy3v6wi] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.mode[b-zqamy3v6wi] {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 8px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mode .meta[b-zqamy3v6wi] {
+  grid-column: 2;
+}
+
+.mode.selected[b-zqamy3v6wi] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.settings[b-zqamy3v6wi] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+
+.settings label[b-zqamy3v6wi] {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.settings input[b-zqamy3v6wi] {
+  width: 160px;
+  color: var(--text);
+  font-size: 15px;
+}
+/* _content/FellowshipSim.UI/Replay/ImportCard.razor.rz.scp.css */
+.linked-bar[b-y13qcvfuyc] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-top: 10px;
+}
+
+.fights[b-y13qcvfuyc] {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.fight[b-y13qcvfuyc] {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.fight.selected[b-y13qcvfuyc] {
+  border-color: var(--accent);
+}
+
+.fight-head[b-y13qcvfuyc] {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.fight-name[b-y13qcvfuyc] {
+  font-weight: 600;
+}
+
+.players[b-y13qcvfuyc] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* A player: name, then hero, on a dark chip. */
+.player[b-y13qcvfuyc] {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--input);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.player:hover:not(:disabled)[b-y13qcvfuyc] {
+  border-color: var(--accent);
+}
+
+.player-name[b-y13qcvfuyc] {
+  font-weight: 600;
+}
+
+.player-hero[b-y13qcvfuyc] {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* The player picked to import (the link's at first). */
+.player.picked[b-y13qcvfuyc] {
+  background: var(--selected);
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.player.picked .player-name[b-y13qcvfuyc] {
+  color: var(--heading);
+}
+
+/* The pick, and the button that imports it. */
+.import-bar[b-y13qcvfuyc] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.import-button[b-y13qcvfuyc] {
+  min-height: 40px;
+  padding: 8px 22px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* A hero the engine does not have yet. */
+.player.unsupported[b-y13qcvfuyc] {
+  background: transparent;
+  color: var(--muted);
+}
+
+.player.unsupported .player-hero[b-y13qcvfuyc] {
+  color: var(--muted);
+}
+/* _content/FellowshipSim.UI/Replay/ReviewsCard.razor.rz.scp.css */
+.table-wrap[b-gxpnb17y3r] {
+  overflow-x: auto;
+}
+
+.table[b-gxpnb17y3r] {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th[b-gxpnb17y3r],
+.table td[b-gxpnb17y3r] {
+  text-align: left;
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.table th[b-gxpnb17y3r] {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.table .num[b-gxpnb17y3r] {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.table tbody tr:hover[b-gxpnb17y3r] {
+  background: var(--row-hover);
+}
+
+.good[b-gxpnb17y3r] {
+  color: var(--good);
+}
+
+.warn[b-gxpnb17y3r] {
+  color: var(--warn);
+}
+
+.bad[b-gxpnb17y3r] {
+  color: var(--bad);
+}
+
+/* A review of a fight logged before the patch the engine models. */
+.old-patch[b-gxpnb17y3r] {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  border: 1px solid var(--warn);
+  border-radius: 999px;
+  color: var(--warn);
+  font-size: 11px;
+  white-space: nowrap;
+}
+/* _content/FellowshipSim.UI/Replay/SettingsCard.razor.rz.scp.css */
+/* The steps to make an API client, as muted as the hint around them. */
+.steps[b-xzydrqwdb2] {
+  margin: 0 0 10px;
+  padding-left: 22px;
+  color: var(--muted);
+}
+
+.steps li + li[b-xzydrqwdb2] {
+  margin-top: 4px;
+}
+/* _content/FellowshipSim.UI/Shared/Card.razor.rz.scp.css */
+.card[b-fhqvpzxw6i] {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 16px 0;
+}
+
+.title[b-fhqvpzxw6i] {
+  margin: 0 0 12px;
+  font-family: var(--heading-font);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--heading);
+}
+
+/* The title with a count on its right. */
+.head[b-fhqvpzxw6i] {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+
+.head .title[b-fhqvpzxw6i] {
+  margin: 0;
+}
+
+.count[b-fhqvpzxw6i] {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.count.over[b-fhqvpzxw6i] {
+  color: var(--bad);
+}
+
+@media (max-width: 600px) {
+  .card[b-fhqvpzxw6i] {
+    padding: 14px 16px;
+  }
+}
+/* _content/FellowshipSim.UI/Shared/Message.razor.rz.scp.css */
+.message[b-hhjziu8ad3] {
+  margin: 8px 0 0;
+  min-height: 1.2em;
+}
+
+.error[b-hhjziu8ad3] {
+  color: var(--bad);
+}
+
+.ok[b-hhjziu8ad3] {
+  color: var(--good);
+}
+
+.warning[b-hhjziu8ad3] {
+  color: var(--warn);
+}
+/* _content/FellowshipSim.UI/Shared/ReviewView.razor.rz.scp.css */
+/* The way back on the left, saving on the right. */
+.review-bar[b-2stbeb0lvk] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  margin: 12px 0 0;
+}
+
+.review-host[b-2stbeb0lvk] {
+  display: block;
+  min-height: 200px;
+}
+/* _content/FellowshipSim.UI/Shell/DesktopShell.razor.rz.scp.css */
+.shell[b-kx8vhyt49w] {
+  display: grid;
+  /* One column no wider than the window: the result tabs scroll inside it instead of widening the page. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Above every page's own layers (sticky bars at 10, menus at 20 and 21): the results sidebar and the open list live in it. */
+.bar[b-kx8vhyt49w] {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.page-tabs[b-kx8vhyt49w] {
+  display: flex;
+  flex: none;
+}
+
+.tab[b-kx8vhyt49w] {
+  display: flex;
+  align-items: center;
+  flex: none;
+  max-width: 260px;
+  border-bottom: 2px solid transparent;
+}
+
+.tab.selected[b-kx8vhyt49w] {
+  border-bottom-color: var(--accent);
+}
+
+.select[b-kx8vhyt49w] {
+  min-width: 0;
+  padding: 8px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: inherit;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.select:hover[b-kx8vhyt49w],
+.selected .select[b-kx8vhyt49w] {
+  color: var(--text);
+}
+
+.close[b-kx8vhyt49w] {
+  flex: none;
+  margin-right: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+}
+
+.close:hover[b-kx8vhyt49w] {
+  color: var(--bad);
+}
+
+/* Result tabs: shrink to their minimum width, then scroll with the arrows or the wheel; no scrollbar. */
+.result-tabs[b-kx8vhyt49w] {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  border-left: 1px solid var(--border);
+}
+
+.result-tabs.empty[b-kx8vhyt49w] {
+  visibility: hidden;
+}
+
+.strip[b-kx8vhyt49w] {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.strip .tab[b-kx8vhyt49w] {
+  flex: 0 1 260px;
+  min-width: 140px;
+  border-left: 1px solid var(--border);
+}
+
+.strip .tab:first-child[b-kx8vhyt49w] {
+  border-left: none;
+}
+
+.arrow[b-kx8vhyt49w] {
+  display: none;
+  flex: none;
+  padding: 2px 8px;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+}
+
+.arrow:hover[b-kx8vhyt49w] {
+  color: var(--text);
+}
+
+.result-tabs[data-overflow] .arrow[b-kx8vhyt49w] {
+  display: block;
+}
+
+.result-tabs[data-at-start] .arrow[data-scroll="-1"][b-kx8vhyt49w],
+.result-tabs[data-at-end] .arrow[data-scroll="1"][b-kx8vhyt49w] {
+  visibility: hidden;
+}
+
+.open-list[b-kx8vhyt49w] {
+  position: relative;
+  flex: none;
+  padding-bottom: 6px;
+}
+
+.open-toggle[b-kx8vhyt49w] {
+  padding: 5px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+  color: var(--text);
+  background: transparent;
+  border-color: var(--border);
+}
+
+/* Covers the window, review iframes included, so a click outside the list closes it. */
+.backdrop[b-kx8vhyt49w] {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+}
+
+.dropdown[b-kx8vhyt49w] {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 2px);
+  z-index: 21;
+  width: min(380px, calc(100vw - 32px));
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+}
+
+.dropdown ul[b-kx8vhyt49w] {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+}
+
+.dropdown li[b-kx8vhyt49w] {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.dropdown li.selected[b-kx8vhyt49w] {
+  background: var(--row-hover);
+}
+
+.pick[b-kx8vhyt49w] {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 7px 6px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+}
+
+.pick:hover .pick-title[b-kx8vhyt49w] {
+  color: var(--accent);
+}
+
+.kind[b-kx8vhyt49w] {
+  flex: none;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 5px;
+}
+
+.pick-title[b-kx8vhyt49w] {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.close-all[b-kx8vhyt49w] {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  font: inherit;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+}
+
+.close-all:hover[b-kx8vhyt49w] {
+  color: var(--bad);
+}
+
+.results[b-kx8vhyt49w] {
+  flex: none;
+  padding-bottom: 6px;
+}
+
+.panel[b-kx8vhyt49w] {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.panel[hidden][b-kx8vhyt49w] {
+  display: none;
+}
+
+.content[b-kx8vhyt49w] {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8px 16px 24px;
+}

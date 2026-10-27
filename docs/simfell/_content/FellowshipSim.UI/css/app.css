@@ -1,0 +1,108 @@
+/* The page's colours, fonts and element defaults. Each component's own rules are in its X.razor.css; rules several components share are in design-system.css. */
+
+/* Cinzel for the name and section headings, Inter for the rest; without the network, the fallbacks below. */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+/* One dark theme: black and gold. */
+:root {
+  /* Native scrollbars and form controls are dark. */
+  color-scheme: dark;
+  --bg: #000000;
+  /* The top bar, and the bar under it. */
+  --header: #0f0f11;
+  --bar: #0a0a0c;
+  --surface: #121215;
+  /* Inputs, and tiles not picked. */
+  --input: #0a0a0c;
+  --text: #ecedee;
+  --muted: #a1a1aa;
+  --border: #27272a;
+  --accent: #b08e58;
+  --accent-text: #0f0f11;
+  /* Headings, the active section and picked tiles' text. */
+  --heading: #d4af6e;
+  /* The background of a picked tile. */
+  --selected: #1c1810;
+  --good: #5fd69a;
+  --warn: #f5a524;
+  --bad: #f87191;
+  --row-hover: #18181c;
+  --heading-font: Cinzel, Georgia, serif;
+  --code-font: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --tok-operator: #e0b04e;
+  --tok-number: #5fd3bf;
+  --tok-named: #b99cf0;
+  --tok-resource: #6fb3f2;
+  --tok-buff: #4cc483;
+  --tok-debuff: #f28bb5;
+  --tok-cooldown: #6fd0e0;
+  --tok-unknown: #f87191;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  /* Bars that run the window's full width reach past the page's own width. */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font:
+    15px/1.5 Inter,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+input,
+select,
+textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--input);
+  color: var(--text);
+  font: inherit;
+}
+
+/* Each page load focuses its first heading (FocusOnNavigate) for screen readers; it needs no ring. */
+h1:focus,
+h2:focus {
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+button {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+a {
+  color: var(--heading);
+}
+code {
+  font-size: 13px;
+}

@@ -1,6 +1,9 @@
 project:
     type: website
     output-dir: docs
+    # SimFell, the browser build (static files): copied as they are
+    resources:
+        - simfell
 
 website:
     title: "MaxiQE"
